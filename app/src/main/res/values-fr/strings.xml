@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tab_earn">Gagner</string>
-    <string name="tab_redeem">Échanger</string>
+    <string name="tab_redeem">Coffre</string>
     <string name="tab_activity">Activité</string>
 
     <string name="watch_ad">Voir une pub</string>
@@ -66,4 +66,9 @@
     <string name="confirm_esim_body">%1$s de données pour %2$s seront ajoutés à votre eSIM GigaBee.</string>
     <string name="redeem_ok_esim">C’est fait ! Les données sont sur votre eSIM GigaBee. Activez l’eSIM dans les réglages SIM pour l’utiliser.</string>
     <string name="esim_demo_code">Code démo : il ne fonctionne pas dans les réglages du téléphone.</string>
+
+    <string name="vault_title">Vos Mo sont en sécurité dans le coffre</string>
+    <string name="vault_soon">Les gigas arrivent bientôt</string>
+    <string name="vault_body">Bientôt, vous pourrez échanger vos Mo contre du vrai internet sur une eSIM GigaBee (USA et Europe). Continuez à regarder des pubs : tout ce que vous gagnez est gardé.</string>
+    <string name="home_vault">Vos Mo vont directement dans votre coffre. Les gigas arrivent bientôt !</string>
 </resources>

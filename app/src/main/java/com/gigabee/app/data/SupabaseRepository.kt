@@ -50,7 +50,18 @@ class SupabaseRepository(
                 if (e.code !in 400..499) throw e
             }
         }
-        saveSession(call("POST", "/auth/v1/signup", JSONObject().put("data", JSONObject()), null))
+        // Each phone gets its own account once (device-signup), then always signs back in with it,
+        // so an expired session never creates a new, empty account.
+        val email = prefs.getString("email", null) ?: run {
+            val creds = JSONObject(call("POST", "/functions/v1/device-signup", JSONObject(), null))
+            prefs.edit(commit = true) {
+                putString("email", creds.getString("email"))
+                putString("password", creds.getString("password"))
+            }
+            creds.getString("email")
+        }
+        val login = JSONObject().put("email", email).put("password", prefs.getString("password", ""))
+        saveSession(call("POST", "/auth/v1/token?grant_type=password", login, null))
     }
 
     private fun saveSession(body: String): String {

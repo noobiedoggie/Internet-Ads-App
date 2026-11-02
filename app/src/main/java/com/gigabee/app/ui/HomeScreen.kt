@@ -170,7 +170,13 @@ fun HomeScreen(
                 }
             } else {
                 Text(
-                    stringResource(if (s.capReached) R.string.helper_cap else R.string.helper_earn),
+                    stringResource(
+                        when {
+                            s.capReached -> R.string.helper_cap
+                            s.bundles.isEmpty() -> R.string.home_vault
+                            else -> R.string.helper_earn
+                        },
+                    ),
                     color = Bee.Muted,
                     fontSize = 13.sp,
                     textAlign = TextAlign.Center,

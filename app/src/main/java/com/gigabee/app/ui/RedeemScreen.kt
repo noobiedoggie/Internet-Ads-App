@@ -29,6 +29,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Send
 import androidx.compose.material.icons.rounded.CheckCircle
+import androidx.compose.material.icons.rounded.Lock
+import com.gigabee.app.data.dataParts
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
@@ -73,16 +75,18 @@ fun RedeemScreen(ui: UiState, onRedeem: (DataBundle) -> Unit) {
         Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 24.dp, vertical = 16.dp),
     ) {
         Text(stringResource(R.string.tab_redeem), color = Bee.Text, fontSize = 30.sp, fontWeight = FontWeight.Black)
-        Text(stringResource(R.string.balance, formatData(s.balanceKb)), color = Bee.Muted, fontSize = 15.sp)
         Spacer(Modifier.height(20.dp))
 
-        EsimCard(s.esim, ui.isDemo)
-        Spacer(Modifier.height(24.dp))
-
+        // Redemptions not open yet: show the vault holding the user's MB.
         if (s.bundles.isEmpty()) {
-            Text(stringResource(R.string.no_bundles), color = Bee.Muted, fontSize = 15.sp)
+            VaultCard(s.balanceKb)
             return@Column
         }
+
+        Text(stringResource(R.string.balance, formatData(s.balanceKb)), color = Bee.Muted, fontSize = 15.sp)
+        Spacer(Modifier.height(16.dp))
+        EsimCard(s.esim, ui.isDemo)
+        Spacer(Modifier.height(24.dp))
 
         if (regions.size > 1) {
             SectionLabel(stringResource(R.string.region))
@@ -145,6 +149,52 @@ fun RedeemScreen(ui: UiState, onRedeem: (DataBundle) -> Unit) {
                 TextButton(onClick = { confirm = null }) { Text(stringResource(R.string.cancel), color = Bee.Muted) }
             },
         )
+    }
+}
+
+@Composable
+private fun VaultCard(balanceKb: Long) {
+    val shape = RoundedCornerShape(28.dp)
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .clip(shape)
+            .background(Bee.Surface)
+            .border(1.5.dp, Bee.Yellow, shape)
+            .padding(horizontal = 24.dp, vertical = 32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Box(
+            Modifier.size(96.dp).clip(RoundedCornerShape(28.dp)).background(Bee.Yellow),
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(Icons.Rounded.Lock, contentDescription = null, tint = Bee.Black, modifier = Modifier.size(52.dp))
+        }
+        Spacer(Modifier.height(20.dp))
+        Text(
+            stringResource(R.string.vault_title),
+            color = Bee.Text,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Black,
+            textAlign = TextAlign.Center,
+        )
+        Spacer(Modifier.height(12.dp))
+        val (number, unit) = dataParts(balanceKb)
+        Row(verticalAlignment = Alignment.Bottom) {
+            Text(number, color = Bee.Yellow, fontSize = 56.sp, fontWeight = FontWeight.Black)
+            Spacer(Modifier.width(6.dp))
+            Text(unit, color = Bee.Yellow, fontSize = 22.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 10.dp))
+        }
+        Spacer(Modifier.height(16.dp))
+        Text(
+            stringResource(R.string.vault_soon),
+            color = Bee.Black,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.ExtraBold,
+            modifier = Modifier.clip(RoundedCornerShape(50)).background(Bee.Yellow).padding(horizontal = 16.dp, vertical = 8.dp),
+        )
+        Spacer(Modifier.height(16.dp))
+        Text(stringResource(R.string.vault_body), color = Bee.Muted, fontSize = 14.sp, textAlign = TextAlign.Center)
     }
 }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tab_earn">Verdienen</string>
-    <string name="tab_redeem">Einlösen</string>
+    <string name="tab_redeem">Tresor</string>
     <string name="tab_activity">Verlauf</string>
 
     <string name="watch_ad">Werbung ansehen</string>
@@ -66,4 +66,9 @@
     <string name="confirm_esim_body">%1$s Datenvolumen für %2$s werden deiner GigaBee-eSIM hinzugefügt.</string>
     <string name="redeem_ok_esim">Fertig! Das Datenvolumen ist auf deiner GigaBee-eSIM. Aktiviere die eSIM in den SIM-Einstellungen.</string>
     <string name="esim_demo_code">Demo-Code: funktioniert nicht in den Handy-Einstellungen.</string>
+
+    <string name="vault_title">Deine MB sind sicher im Tresor</string>
+    <string name="vault_soon">Gigas kommen bald</string>
+    <string name="vault_body">Bald tauschst du deine MB gegen echtes Internet auf einer GigaBee-eSIM (USA und Europa). Schau weiter Werbung: Alles, was du verdienst, bleibt gespeichert.</string>
+    <string name="home_vault">Deine MB landen direkt in deinem Tresor. Gigas kommen bald!</string>
 </resources>

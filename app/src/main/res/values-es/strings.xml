@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tab_earn">Ganar</string>
-    <string name="tab_redeem">Canjear</string>
+    <string name="tab_redeem">Bóveda</string>
     <string name="tab_activity">Actividad</string>
 
     <string name="watch_ad">Ver anuncio</string>
@@ -66,4 +66,9 @@
     <string name="confirm_esim_body">Se agregarán %1$s de datos para %2$s a tu eSIM GigaBee.</string>
     <string name="redeem_ok_esim">¡Listo! Los datos están en tu eSIM GigaBee. Actívala en los ajustes de SIM para usarla.</string>
     <string name="esim_demo_code">Código demo: no funciona en los ajustes del celular.</string>
+
+    <string name="vault_title">Tus megas están seguros en la bóveda</string>
+    <string name="vault_soon">Gigas muy pronto</string>
+    <string name="vault_body">Pronto podrás cambiar tus megas por internet real en una eSIM GigaBee (EE. UU. y Europa). Sigue viendo anuncios: todo lo que ganes se guarda.</string>
+    <string name="home_vault">Tus megas van directo a tu bóveda. ¡Gigas muy pronto!</string>
 </resources>

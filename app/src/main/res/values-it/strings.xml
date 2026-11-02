@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tab_earn">Guadagna</string>
-    <string name="tab_redeem">Riscatta</string>
+    <string name="tab_redeem">Cassaforte</string>
     <string name="tab_activity">Attività</string>
 
     <string name="watch_ad">Guarda annuncio</string>
@@ -66,4 +66,9 @@
     <string name="confirm_esim_body">%1$s di dati per %2$s verranno aggiunti alla tua eSIM GigaBee.</string>
     <string name="redeem_ok_esim">Fatto! I dati sono sulla tua eSIM GigaBee. Attiva l’eSIM nelle impostazioni SIM per usarla.</string>
     <string name="esim_demo_code">Codice demo: non funziona nelle impostazioni del telefono.</string>
+
+    <string name="vault_title">I tuoi MB sono al sicuro nella cassaforte</string>
+    <string name="vault_soon">Giga in arrivo</string>
+    <string name="vault_body">Presto potrai scambiare i tuoi MB con vero internet su una eSIM GigaBee (USA ed Europa). Continua a guardare annunci: tutto ciò che guadagni resta salvato.</string>
+    <string name="home_vault">I tuoi MB vanno dritti nella cassaforte. Giga in arrivo!</string>
 </resources>

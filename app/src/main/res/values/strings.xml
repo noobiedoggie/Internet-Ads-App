@@ -3,7 +3,7 @@
     <string name="app_name">GigaBee</string>
 
     <string name="tab_earn">Earn</string>
-    <string name="tab_redeem">Redeem</string>
+    <string name="tab_redeem">Vault</string>
     <string name="tab_activity">Activity</string>
 
     <string name="watch_ad">Watch ad</string>
@@ -68,4 +68,9 @@
     <string name="confirm_esim_body">%1$s of data for %2$s will be added to your GigaBee eSIM.</string>
     <string name="redeem_ok_esim">Done! The data is on your GigaBee eSIM. Turn the eSIM on in SIM settings to use it.</string>
     <string name="esim_demo_code">Demo code: it won’t work in phone settings.</string>
+
+    <string name="vault_title">Your MB are safe in the vault</string>
+    <string name="vault_soon">Gigas coming soon</string>
+    <string name="vault_body">Soon you’ll swap your MB for real internet on a GigaBee eSIM (USA and Europe). Keep watching ads: everything you earn is kept.</string>
+    <string name="home_vault">Your MB go straight into your vault. Gigas coming soon!</string>
 </resources>
