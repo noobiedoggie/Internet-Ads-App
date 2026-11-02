@@ -35,4 +35,10 @@ interface Repository {
 
     /** Picks a new random nickname and returns it. */
     suspend fun rerollNickname(): String
+
+    /** Spends honey on one wheel spin; the server draws the prize. */
+    suspend fun spin(): GameResult
+
+    /** Swaps honey for a co card of [kb]. */
+    suspend fun buyCard(kb: Long): GameResult
 }

@@ -44,7 +44,7 @@ import androidx.compose.ui.unit.sp
 import com.gigabee.app.R
 import com.gigabee.app.data.AppState
 import com.gigabee.app.data.LeaderboardEntry
-import com.gigabee.app.data.formatData
+import com.gigabee.app.data.formatHoney
 import com.gigabee.app.ui.theme.Bee
 
 private const val SHARE_URL = "https://github.com/noobiedoggie/Internet-Ads-App/releases/download/latest/GigaBee.apk"
@@ -65,7 +65,7 @@ fun TopScreen(ui: UiState, onLoad: () -> Unit, onReroll: () -> Unit, onApplyCode
             Text(stringResource(R.string.top_reset), color = Bee.Muted, fontSize = 14.sp)
             Spacer(Modifier.height(10.dp))
         }
-        item { MeCard(s, lb?.myRank, lb?.myKb ?: 0L, onReroll) }
+        item { MeCard(s, lb?.myRank, lb?.myScore ?: 0L, onReroll) }
         item { InviteCard(s, onApplyCode) }
         item { Spacer(Modifier.height(6.dp)) }
         if (lb == null || lb.top.isEmpty()) {
@@ -79,7 +79,7 @@ fun TopScreen(ui: UiState, onLoad: () -> Unit, onReroll: () -> Unit, onApplyCode
 private val cardShape = RoundedCornerShape(24.dp)
 
 @Composable
-private fun MeCard(s: AppState, myRank: Int?, myKb: Long, onReroll: () -> Unit) {
+private fun MeCard(s: AppState, myRank: Int?, myScore: Long, onReroll: () -> Unit) {
     Column(
         Modifier.fillMaxWidth().clip(cardShape).background(Bee.Surface).border(1.dp, Bee.Line, cardShape).padding(20.dp),
     ) {
@@ -89,7 +89,7 @@ private fun MeCard(s: AppState, myRank: Int?, myKb: Long, onReroll: () -> Unit) 
             Column(Modifier.weight(1f)) {
                 Text(s.nickname ?: "…", color = Bee.Text, fontSize = 20.sp, fontWeight = FontWeight.Black)
                 Text(
-                    if (myRank != null) stringResource(R.string.top_you, myRank) + " · " + formatData(myKb)
+                    if (myRank != null) stringResource(R.string.top_you, myRank) + " · " + formatHoney(myScore) + " 🍯"
                     else stringResource(R.string.top_unranked),
                     color = Bee.Muted,
                     fontSize = 13.sp,
@@ -117,7 +117,7 @@ private fun InviteCard(s: AppState, onApplyCode: (String) -> Unit) {
     ) {
         Text(stringResource(R.string.invite_title), color = Bee.Text, fontSize = 18.sp, fontWeight = FontWeight.Black)
         Spacer(Modifier.height(6.dp))
-        Text(stringResource(R.string.invite_body, formatData(s.referralKb), s.referralTarget), color = Bee.Muted, fontSize = 14.sp)
+        Text(stringResource(R.string.invite_body, formatHoney(s.referralHoney) + " 🍯", s.referralTarget), color = Bee.Muted, fontSize = 14.sp)
 
         val myCode = s.referralCode
         if (myCode != null) {
@@ -207,6 +207,6 @@ private fun RankRow(e: LeaderboardEntry) {
             modifier = Modifier.width(44.dp),
         )
         Text(e.nickname, color = fg, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f))
-        Text(formatData(e.kb), color = if (e.me) Bee.Black else Bee.Yellow, fontSize = 15.sp, fontWeight = FontWeight.Black)
+        Text(formatHoney(e.score) + " 🍯", color = if (e.me) Bee.Black else Bee.Yellow, fontSize = 15.sp, fontWeight = FontWeight.Black)
     }
 }

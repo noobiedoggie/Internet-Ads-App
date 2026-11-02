@@ -23,6 +23,7 @@ import androidx.compose.material.icons.automirrored.rounded.List
 import androidx.compose.material.icons.automirrored.rounded.Send
 import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material.icons.rounded.PlayArrow
+import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
@@ -89,12 +90,13 @@ fun AppRoot(vm: AppViewModel) {
                 tab == 0 -> HomeScreen(
                     ui,
                     onWatch = { activity?.let(vm::watchAd) },
-                    onRedeem = { tab = 1 },
+                    onOpenWheel = { tab = 1 },
                     onDebugBonus = vm::debugBonus,
                     onSurveys = if (ui.surveysAvailable) vm::openSurveys else null,
                 )
-                tab == 1 -> RedeemScreen(ui, onRedeem = { bundle -> vm.redeem(bundle.id) })
-                tab == 2 -> TopScreen(
+                tab == 1 -> WheelScreen(ui, onSpin = vm::spin, onFinished = vm::spinFinished)
+                tab == 2 -> RedeemScreen(ui, onRedeem = { bundle -> vm.redeem(bundle.id) }, onBuy = vm::buyCard)
+                tab == 3 -> TopScreen(
                     ui,
                     onLoad = vm::loadLeaderboard,
                     onReroll = vm::rerollNickname,
@@ -130,6 +132,7 @@ fun AppRoot(vm: AppViewModel) {
 private fun BeeTabs(selected: Int, onSelect: (Int) -> Unit) {
     val tabs: List<Pair<Int, ImageVector>> = listOf(
         R.string.tab_earn to Icons.Rounded.PlayArrow,
+        R.string.tab_wheel to Icons.Rounded.Refresh,
         R.string.tab_redeem to Icons.Rounded.Lock,
         R.string.tab_top to Icons.Rounded.Star,
         R.string.tab_activity to Icons.AutoMirrored.Rounded.List,

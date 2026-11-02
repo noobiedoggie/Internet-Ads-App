@@ -47,7 +47,7 @@
     <string name="surveys">Sondages : gagnez plus</string>
     <string name="survey_demo_title">Sondage démo</string>
     <string name="survey_demo_body">Les vrais sondages BitLabs apparaîtront ici une fois votre App Token ajouté. Touchez Terminer pour en simuler un.</string>
-    <string name="survey_complete">Terminer +100 Mo</string>
+    <string name="survey_complete">Terminer +1 000 🍯</string>
     <string name="kind_survey">Sondage terminé</string>
     <string name="close">Fermer</string>
 
@@ -69,13 +69,13 @@
 
     <string name="vault_title">Vos Mo sont en sécurité dans le coffre</string>
     <string name="vault_soon">Les gigas arrivent bientôt</string>
-    <string name="vault_body">Bientôt, vous pourrez échanger vos Mo contre du vrai internet sur une eSIM GigaBee (USA et Europe). Continuez à regarder des pubs : tout ce que vous gagnez est gardé.</string>
+    <string name="vault_body">Bientôt, vos cartes de co deviendront du vrai internet sur une eSIM GigaBee (USA et Europe).</string>
     <string name="home_vault">Vos Mo vont directement dans votre coffre. Les gigas arrivent bientôt !</string>
 
     <string name="tab_top">Top</string>
     <string name="streak_label">🔥 %1$d jours</string>
     <string name="streak_bonus">Bonus +%1$d %%</string>
-    <string name="streak_hint">Revenez chaque jour : jusqu’à +%1$d %% de Mo par pub.</string>
+    <string name="streak_hint">Revenez chaque jour : jusqu’à +%1$d %% de miel par pub.</string>
     <string name="streak_keep">Regardez 1 pub aujourd’hui pour garder votre série de %1$d jours !</string>
     <string name="top_title">Top de la semaine</string>
     <string name="top_you">Vous · n°%1$d cette semaine</string>
@@ -95,4 +95,32 @@
     <string name="notif_title">Vos pubs sont prêtes 🐝</string>
     <string name="notif_body">Regardez aujourd’hui pour garder votre série et remplir votre coffre.</string>
     <string name="notif_channel">Rappel quotidien</string>
+
+    <string name="tab_wheel">Roue</string>
+    <string name="honey_unit">gouttes de miel</string>
+    <string name="of_spin">sur %1$s · prochain tour</string>
+    <string name="spin_ready">Tour disponible !</string>
+    <string name="go_spin">Tourner la roue →</string>
+    <string name="helper_honey">Gagnez du miel 🍯 : échangez-le contre des cartes de co ou tentez votre chance à la roue.</string>
+    <string name="wheel_title">Roue de la chance</string>
+    <string name="wheel_spin">Tourner · %1$s 🍯</string>
+    <string name="wheel_need">Il vous faut %1$s 🍯</string>
+    <string name="wheel_odds">Chances</string>
+    <string name="wheel_note">Chaque tour gagne une carte de co. Les cartes deviendront bientôt du vrai internet.</string>
+    <string name="won_title">Gagné !</string>
+    <string name="won_ok">Récupérer</string>
+    <string name="card_header">CARTE CO</string>
+    <string name="rarity_common">Commune</string>
+    <string name="rarity_uncommon">Peu commune</string>
+    <string name="rarity_rare">Rare</string>
+    <string name="rarity_epic">★ Épique</string>
+    <string name="rarity_legendary">★ Légendaire</string>
+    <string name="shop_title">Échanger du miel contre de la co</string>
+    <string name="cards_title">Mes cartes de co</string>
+    <string name="cards_empty">Pas encore de cartes. Tournez la roue ou échangez du miel pour obtenir la première.</string>
+    <string name="co_total">Total : %1$s de co</string>
+    <string name="bought">Carte %1$s ajoutée</string>
+    <string name="not_enough_honey">Pas encore assez de miel</string>
+    <string name="kind_buy">Miel → co</string>
+    <string name="card_label">Carte %1$s</string>
 </resources>

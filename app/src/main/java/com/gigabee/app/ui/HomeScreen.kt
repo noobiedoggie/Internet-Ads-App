@@ -43,8 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gigabee.app.BuildConfig
 import com.gigabee.app.R
-import com.gigabee.app.data.dataParts
-import com.gigabee.app.data.formatData
+import com.gigabee.app.data.formatHoney
 import com.gigabee.app.ui.theme.Bee
 import kotlin.math.PI
 import kotlin.math.sin
@@ -53,15 +52,16 @@ import kotlin.math.sin
 fun HomeScreen(
     ui: UiState,
     onWatch: () -> Unit,
-    onRedeem: () -> Unit,
+    onOpenWheel: () -> Unit,
     onDebugBonus: () -> Unit,
     onSurveys: (() -> Unit)? = null,
 ) {
     val s = ui.state ?: return
-    val target = (s.balanceKb.toFloat() / s.goalKb).coerceIn(0f, 1f)
+    // The ring fills up toward the next wheel spin.
+    val target = if (s.spinCost > 0) (s.honey.toFloat() / s.spinCost).coerceIn(0f, 1f) else 0f
     val progress by animateFloatAsState(target, tween(900, easing = FastOutSlowInEasing), label = "ring")
 
-    // "+3.3 MB" floats up and the ring pulses each time a reward lands.
+    // "+23 🍯" floats up and the ring pulses each time a reward lands.
     val pop = remember { Animatable(0f) }
     LaunchedEffect(ui.rewardEvent) {
         if (ui.rewardEvent > 0) {
@@ -111,15 +111,21 @@ fun HomeScreen(
         ) {
             ProgressRing(progress, Modifier.fillMaxSize())
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                val (number, unit) = dataParts(s.balanceKb)
-                Text(number, color = Bee.Text, fontSize = 64.sp, fontWeight = FontWeight.Black, letterSpacing = (-2).sp)
-                Text(unit, color = Bee.Yellow, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                Text("🍯", fontSize = 26.sp)
+                Text(formatHoney(s.honey), color = Bee.Text, fontSize = 60.sp, fontWeight = FontWeight.Black, letterSpacing = (-2).sp)
+                Text(stringResource(R.string.honey_unit), color = Bee.Yellow, fontSize = 16.sp, fontWeight = FontWeight.Bold)
                 Spacer(Modifier.height(4.dp))
-                Text(stringResource(R.string.of_goal, formatData(s.goalKb)), color = Bee.Muted, fontSize = 14.sp)
-            }
-            if (p > 0f && p < 1f && ui.rewardKb > 0) {
                 Text(
-                    "+" + formatData(ui.rewardKb),
+                    if (s.canSpin) stringResource(R.string.spin_ready)
+                    else stringResource(R.string.of_spin, formatHoney(s.spinCost)),
+                    color = if (s.canSpin) Bee.Yellow else Bee.Muted,
+                    fontSize = 14.sp,
+                    fontWeight = if (s.canSpin) FontWeight.Bold else FontWeight.Normal,
+                )
+            }
+            if (p > 0f && p < 1f && ui.rewardHoney > 0) {
+                Text(
+                    "+" + formatHoney(ui.rewardHoney) + " 🍯",
                     color = Bee.Yellow,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.ExtraBold,
@@ -134,7 +140,7 @@ fun HomeScreen(
             s.capReached -> stringResource(R.string.cap_reached)
             ui.verifying -> stringResource(R.string.verifying)
             !ui.adReady -> stringResource(R.string.loading_ad)
-            else -> stringResource(R.string.watch_ad) + "  +" + formatData(s.kbPerAd)
+            else -> stringResource(R.string.watch_ad) + "  +" + formatHoney(s.honeyPerAd) + " 🍯"
         }
         BeeButton(
             text = label,
@@ -159,17 +165,15 @@ fun HomeScreen(
             }
         }
 
-        val redeemable = s.redeemable
         Column(
             Modifier.fillMaxWidth().height(64.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
-            if (redeemable != null) {
-                TextButton(onClick = onRedeem) {
+            if (s.canSpin) {
+                TextButton(onClick = onOpenWheel) {
                     Text(
-                        stringResource(R.string.helper_ready, formatData(redeemable)) + "  " +
-                            stringResource(R.string.redeem_now) + " →",
+                        stringResource(R.string.go_spin),
                         color = Bee.Yellow,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center,
@@ -181,8 +185,7 @@ fun HomeScreen(
                         when {
                             s.capReached -> R.string.helper_cap
                             s.streak > 0 && s.adsToday == 0 -> R.string.streak_keep
-                            s.bundles.isEmpty() -> R.string.home_vault
-                            else -> R.string.helper_earn
+                            else -> R.string.helper_honey
                         },
                         s.streak,
                     ),

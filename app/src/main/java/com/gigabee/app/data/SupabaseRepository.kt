@@ -98,7 +98,17 @@ class SupabaseRepository(
             canEnterReferral = json.optBoolean("can_enter_referral", false),
             lifetimeAds = json.optInt("lifetime_ads", 0),
             referralTarget = json.optInt("referral_target", 30),
-            referralKb = json.optLong("referral_kb", 50 * KB_PER_MB),
+            honey = json.optLong("honey", 0L),
+            honeyPerAd = json.optLong("honey_per_ad", 0L),
+            spinCost = json.optLong("spin_cost", 100L),
+            referralHoney = json.optLong("referral_honey", 500L),
+            wheel = json.optJSONArray("wheel").objects().map {
+                WheelPrize(it.getLong("kb"), it.getInt("weight"), it.optString("rarity", cardRarity(it.getLong("kb"))))
+            },
+            shop = json.optJSONArray("shop").objects().map { ShopItem(it.getLong("kb"), it.getLong("cost")) },
+            cards = json.optJSONArray("cards").objects().map {
+                CardStack(it.getLong("kb"), it.optString("rarity", cardRarity(it.getLong("kb"))), it.getInt("count"))
+            },
             balanceKb = json.getLong("balance_kb"),
             adsToday = json.getInt("ads_today"),
             dailyCap = json.getInt("daily_cap"),
@@ -116,11 +126,13 @@ class SupabaseRepository(
             val o = arr.getJSONObject(i)
             LedgerEntry(
                 id = o.get("id").toString(),
-                deltaKb = o.getLong("delta_kb"),
+                amount = o.getLong("delta_kb"),
                 kind = o.getString("kind"),
                 note = o.optString("note").takeUnless { it.isBlank() || it == "null" },
                 status = o.optString("status").takeUnless { it.isBlank() || it == "null" },
                 timeMillis = o.getLong("ts"),
+                currency = o.optString("currency", "kb"),
+                cardKb = o.optLong("card_kb", 0L).takeIf { it > 0 },
             )
         }
     }
@@ -130,7 +142,7 @@ class SupabaseRepository(
         repeat(8) { attempt ->
             delay(if (attempt == 0) 1200 else 1500)
             val s = state()
-            if (s.balanceKb != previous.balanceKb || s.adsToday != previous.adsToday) return s
+            if (s.honey != previous.honey || s.adsToday != previous.adsToday) return s
         }
         return state()
     }
@@ -149,10 +161,10 @@ class SupabaseRepository(
         return Leaderboard(
             top = (0 until arr.length()).map { i ->
                 val o = arr.getJSONObject(i)
-                LeaderboardEntry(o.getInt("rank"), o.getString("nickname"), o.getLong("kb"), o.optBoolean("me"))
+                LeaderboardEntry(o.getInt("rank"), o.getString("nickname"), o.optLong("honey"), o.optBoolean("me"))
             },
             myRank = me?.optInt("rank"),
-            myKb = me?.optLong("kb") ?: 0L,
+            myScore = me?.optLong("honey") ?: 0L,
         )
     }
 
@@ -163,6 +175,22 @@ class SupabaseRepository(
 
     override suspend fun rerollNickname(): String =
         authed("POST", "/rest/v1/rpc/reroll_nickname", JSONObject()).trim().trim('"')
+
+    override suspend fun spin(): GameResult =
+        gameResult(JSONObject(authed("POST", "/rest/v1/rpc/spin_wheel", JSONObject())))
+
+    override suspend fun buyCard(kb: Long): GameResult =
+        gameResult(JSONObject(authed("POST", "/rest/v1/rpc/buy_card", JSONObject().put("p_kb", kb))))
+
+    private fun gameResult(json: JSONObject): GameResult =
+        if (json.optBoolean("ok")) {
+            GameResult.Ok(json.getLong("kb"), json.optString("rarity", cardRarity(json.getLong("kb"))), json.getLong("honey"))
+        } else {
+            GameResult.Error(json.optString("reason", "error"))
+        }
+
+    private fun JSONArray?.objects(): List<JSONObject> =
+        if (this == null) emptyList() else (0 until length()).map { getJSONObject(it) }
 
     // ---------- http ----------
 

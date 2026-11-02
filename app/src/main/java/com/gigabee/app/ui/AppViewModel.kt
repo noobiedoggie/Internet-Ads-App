@@ -14,7 +14,9 @@ import com.gigabee.app.data.Leaderboard
 import com.gigabee.app.data.LedgerEntry
 import com.gigabee.app.reminder.Reminder
 import com.gigabee.app.data.RedeemResult
+import com.gigabee.app.data.GameResult
 import com.gigabee.app.data.formatData
+import com.gigabee.app.data.formatHoney
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -31,7 +33,7 @@ data class UiState(
     val busy: Boolean = false,
     val verifying: Boolean = false,
     val redeeming: Boolean = false,
-    val rewardKb: Long = 0,
+    val rewardHoney: Long = 0,
     val rewardEvent: Int = 0,
     val message: String? = null,
     val messageId: Int = 0,
@@ -39,6 +41,9 @@ data class UiState(
     val surveyUrl: String? = null,
     val showDemoSurvey: Boolean = false,
     val leaderboard: Leaderboard? = null,
+    val spinning: Boolean = false,
+    val spinResult: GameResult.Ok? = null,
+    val spinSeq: Int = 0,
 )
 
 class AppViewModel(app: Application) : AndroidViewModel(app) {
@@ -93,15 +98,15 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 }
                 _ui.update { it.copy(verifying = true) }
                 val after = repo.onAdRewarded(before)
-                val gained = after.balanceKb - before.balanceKb
+                val gained = after.honey - before.honey
                 _ui.update {
                     it.copy(
                         state = after,
-                        rewardKb = gained,
+                        rewardHoney = gained,
                         rewardEvent = if (gained > 0) it.rewardEvent + 1 else it.rewardEvent,
                     )
                 }
-                if (gained > 0) say(text(R.string.reward_added, formatData(gained)))
+                if (gained > 0) say(text(R.string.reward_added, formatHoney(gained) + " 🍯"))
                 Reminder.markWatchedToday(getApplication())
                 val h = repo.history()
                 _ui.update { it.copy(history = h) }
@@ -166,7 +171,55 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         viewModelScope.launch {
             repo.demoSurvey()
             refresh()
-            say(text(R.string.reward_added, formatData(100 * KB_PER_MB)))
+            say(text(R.string.reward_added, formatHoney(1000) + " 🍯"))
+        }
+    }
+
+    /** Spends honey on a spin. The UI animates the wheel, shows the card, then calls [spinFinished]. */
+    fun spin() {
+        if (_ui.value.spinning) return
+        viewModelScope.launch {
+            _ui.update { it.copy(spinning = true) }
+            try {
+                when (val r = repo.spin()) {
+                    is GameResult.Ok -> _ui.update { u ->
+                        u.copy(state = u.state?.copy(honey = r.honeyLeft), spinResult = r, spinSeq = u.spinSeq + 1)
+                    }
+                    is GameResult.Error -> {
+                        _ui.update { it.copy(spinning = false) }
+                        say(text(if (r.reason == "honey") R.string.not_enough_honey else R.string.error_generic))
+                    }
+                }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                _ui.update { it.copy(spinning = false) }
+                say(text(R.string.error_generic))
+            }
+        }
+    }
+
+    fun spinFinished() {
+        _ui.update { it.copy(spinning = false, spinResult = null) }
+        viewModelScope.launch { runCatching { reload() } }
+    }
+
+    fun buyCard(kb: Long) {
+        viewModelScope.launch {
+            try {
+                when (val r = repo.buyCard(kb)) {
+                    is GameResult.Ok -> {
+                        say(text(R.string.bought, formatData(r.kb)))
+                        reload()
+                    }
+                    is GameResult.Error ->
+                        say(text(if (r.reason == "honey") R.string.not_enough_honey else R.string.error_generic))
+                }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                say(text(R.string.error_generic))
+            }
         }
     }
 

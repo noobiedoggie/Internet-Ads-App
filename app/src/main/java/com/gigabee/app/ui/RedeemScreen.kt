@@ -30,7 +30,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Send
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.Lock
-import com.gigabee.app.data.dataParts
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
@@ -56,11 +55,13 @@ import androidx.compose.ui.unit.sp
 import com.gigabee.app.R
 import com.gigabee.app.data.DataBundle
 import com.gigabee.app.data.EsimInfo
+import com.gigabee.app.data.ShopItem
 import com.gigabee.app.data.formatData
+import com.gigabee.app.data.formatHoney
 import com.gigabee.app.ui.theme.Bee
 
 @Composable
-fun RedeemScreen(ui: UiState, onRedeem: (DataBundle) -> Unit) {
+fun RedeemScreen(ui: UiState, onRedeem: (DataBundle) -> Unit, onBuy: (Long) -> Unit) {
     val s = ui.state ?: return
     val regions = s.bundles.map { it.carrier }.distinct()
     var chosenRegion by rememberSaveable { mutableStateOf<String?>(null) }
@@ -74,17 +75,49 @@ fun RedeemScreen(ui: UiState, onRedeem: (DataBundle) -> Unit) {
     Column(
         Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 24.dp, vertical = 16.dp),
     ) {
-        Text(stringResource(R.string.tab_redeem), color = Bee.Text, fontSize = 30.sp, fontWeight = FontWeight.Black)
+        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                stringResource(R.string.tab_redeem),
+                color = Bee.Text,
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Black,
+                modifier = Modifier.weight(1f),
+            )
+            Pill("🍯 " + formatHoney(s.honey), selected = true)
+        }
+        Text(stringResource(R.string.co_total, formatData(s.balanceKb)), color = Bee.Muted, fontSize = 15.sp)
         Spacer(Modifier.height(20.dp))
 
-        // Redemptions not open yet: show the vault holding the user's MB.
+        // Honey -> co swap.
+        SectionLabel(stringResource(R.string.shop_title))
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            s.shop.forEach { item ->
+                ShopTile(item, affordable = s.honey >= item.cost, modifier = Modifier.weight(1f)) { onBuy(item.kb) }
+            }
+        }
+        Spacer(Modifier.height(24.dp))
+
+        // The user's co cards.
+        SectionLabel(stringResource(R.string.cards_title))
+        if (s.cards.isEmpty()) {
+            Text(stringResource(R.string.cards_empty), color = Bee.Muted, fontSize = 14.sp)
+        } else {
+            s.cards.chunked(2).forEach { row ->
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    row.forEach { c -> CoCard(c.kb, c.rarity, Modifier.weight(1f), count = c.count) }
+                    if (row.size == 1) Spacer(Modifier.weight(1f))
+                }
+                Spacer(Modifier.height(12.dp))
+            }
+        }
+        Spacer(Modifier.height(20.dp))
+
+        // Redemptions not open yet: cards wait in the vault.
         if (s.bundles.isEmpty()) {
-            VaultCard(s.balanceKb)
+            VaultCard()
             return@Column
         }
 
-        Text(stringResource(R.string.balance, formatData(s.balanceKb)), color = Bee.Muted, fontSize = 15.sp)
-        Spacer(Modifier.height(16.dp))
         EsimCard(s.esim, ui.isDemo)
         Spacer(Modifier.height(24.dp))
 
@@ -153,39 +186,24 @@ fun RedeemScreen(ui: UiState, onRedeem: (DataBundle) -> Unit) {
 }
 
 @Composable
-private fun VaultCard(balanceKb: Long) {
-    val shape = RoundedCornerShape(28.dp)
+private fun VaultCard() {
+    val shape = RoundedCornerShape(24.dp)
     Column(
         Modifier
             .fillMaxWidth()
             .clip(shape)
             .background(Bee.Surface)
             .border(1.5.dp, Bee.Yellow, shape)
-            .padding(horizontal = 24.dp, vertical = 32.dp),
+            .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
-            Modifier.size(96.dp).clip(RoundedCornerShape(28.dp)).background(Bee.Yellow),
+            Modifier.size(56.dp).clip(RoundedCornerShape(18.dp)).background(Bee.Yellow),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(Icons.Rounded.Lock, contentDescription = null, tint = Bee.Black, modifier = Modifier.size(52.dp))
+            Icon(Icons.Rounded.Lock, contentDescription = null, tint = Bee.Black, modifier = Modifier.size(30.dp))
         }
-        Spacer(Modifier.height(20.dp))
-        Text(
-            stringResource(R.string.vault_title),
-            color = Bee.Text,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Black,
-            textAlign = TextAlign.Center,
-        )
         Spacer(Modifier.height(12.dp))
-        val (number, unit) = dataParts(balanceKb)
-        Row(verticalAlignment = Alignment.Bottom) {
-            Text(number, color = Bee.Yellow, fontSize = 56.sp, fontWeight = FontWeight.Black)
-            Spacer(Modifier.width(6.dp))
-            Text(unit, color = Bee.Yellow, fontSize = 22.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 10.dp))
-        }
-        Spacer(Modifier.height(16.dp))
         Text(
             stringResource(R.string.vault_soon),
             color = Bee.Black,
@@ -193,8 +211,31 @@ private fun VaultCard(balanceKb: Long) {
             fontWeight = FontWeight.ExtraBold,
             modifier = Modifier.clip(RoundedCornerShape(50)).background(Bee.Yellow).padding(horizontal = 16.dp, vertical = 8.dp),
         )
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(10.dp))
         Text(stringResource(R.string.vault_body), color = Bee.Muted, fontSize = 14.sp, textAlign = TextAlign.Center)
+    }
+}
+
+@Composable
+private fun ShopTile(item: ShopItem, affordable: Boolean, modifier: Modifier = Modifier, onClick: () -> Unit) {
+    val shape = RoundedCornerShape(18.dp)
+    Column(
+        modifier
+            .clip(shape)
+            .background(if (affordable) Bee.Yellow else Bee.Surface)
+            .border(1.dp, if (affordable) Bee.Yellow else Bee.Line, shape)
+            .clickable(enabled = affordable, onClick = onClick)
+            .padding(vertical = 14.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(formatData(item.kb), color = if (affordable) Bee.Black else Bee.Text, fontSize = 18.sp, fontWeight = FontWeight.Black)
+        Spacer(Modifier.height(2.dp))
+        Text(
+            formatHoney(item.cost) + " 🍯",
+            color = if (affordable) Bee.Black.copy(alpha = 0.75f) else Bee.Muted,
+            fontSize = 13.sp,
+            fontWeight = FontWeight.Bold,
+        )
     }
 }
 

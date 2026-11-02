@@ -47,7 +47,7 @@
     <string name="surveys">Sondaggi: guadagna di più</string>
     <string name="survey_demo_title">Sondaggio demo</string>
     <string name="survey_demo_body">I veri sondaggi BitLabs compariranno qui dopo aver aggiunto il tuo App Token. Tocca Completa per simularne uno.</string>
-    <string name="survey_complete">Completa +100 MB</string>
+    <string name="survey_complete">Completa +1.000 🍯</string>
     <string name="kind_survey">Sondaggio completato</string>
     <string name="close">Chiudi</string>
 
@@ -69,13 +69,13 @@
 
     <string name="vault_title">I tuoi MB sono al sicuro nella cassaforte</string>
     <string name="vault_soon">Giga in arrivo</string>
-    <string name="vault_body">Presto potrai scambiare i tuoi MB con vero internet su una eSIM GigaBee (USA ed Europa). Continua a guardare annunci: tutto ciò che guadagni resta salvato.</string>
+    <string name="vault_body">Presto le tue carte dati diventeranno vero internet su una eSIM GigaBee (USA ed Europa).</string>
     <string name="home_vault">I tuoi MB vanno dritti nella cassaforte. Giga in arrivo!</string>
 
     <string name="tab_top">Top</string>
     <string name="streak_label">🔥 %1$d giorni</string>
     <string name="streak_bonus">Bonus +%1$d%%</string>
-    <string name="streak_hint">Torna ogni giorno: fino a +%1$d%% di MB per annuncio.</string>
+    <string name="streak_hint">Torna ogni giorno: fino a +%1$d%% di miele per annuncio.</string>
     <string name="streak_keep">Guarda 1 annuncio oggi per mantenere la tua serie di %1$d giorni!</string>
     <string name="top_title">Top della settimana</string>
     <string name="top_you">Tu · #%1$d questa settimana</string>
@@ -95,4 +95,32 @@
     <string name="notif_title">I tuoi annunci sono pronti 🐝</string>
     <string name="notif_body">Guarda oggi per mantenere la serie e riempire la cassaforte.</string>
     <string name="notif_channel">Promemoria giornaliero</string>
+
+    <string name="tab_wheel">Ruota</string>
+    <string name="honey_unit">gocce di miele</string>
+    <string name="of_spin">su %1$s · prossimo giro</string>
+    <string name="spin_ready">Giro pronto!</string>
+    <string name="go_spin">Gira la ruota →</string>
+    <string name="helper_honey">Guadagna miele 🍯: scambialo con carte dati o tenta la fortuna alla ruota.</string>
+    <string name="wheel_title">Ruota della fortuna</string>
+    <string name="wheel_spin">Gira · %1$s 🍯</string>
+    <string name="wheel_need">Ti servono %1$s 🍯</string>
+    <string name="wheel_odds">Probabilità</string>
+    <string name="wheel_note">Ogni giro vince una carta dati. Presto le carte diventeranno vero internet.</string>
+    <string name="won_title">Hai vinto!</string>
+    <string name="won_ok">Raccogli</string>
+    <string name="card_header">CARTA DATI</string>
+    <string name="rarity_common">Comune</string>
+    <string name="rarity_uncommon">Non comune</string>
+    <string name="rarity_rare">Rara</string>
+    <string name="rarity_epic">★ Epica</string>
+    <string name="rarity_legendary">★ Leggendaria</string>
+    <string name="shop_title">Scambia miele con dati</string>
+    <string name="cards_title">Le mie carte dati</string>
+    <string name="cards_empty">Ancora nessuna carta. Gira la ruota o scambia miele per ottenere la prima.</string>
+    <string name="co_total">Totale: %1$s di dati</string>
+    <string name="bought">Carta da %1$s aggiunta</string>
+    <string name="not_enough_honey">Non hai ancora abbastanza miele</string>
+    <string name="kind_buy">Miele → dati</string>
+    <string name="card_label">Carta da %1$s</string>
 </resources>

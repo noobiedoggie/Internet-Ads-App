@@ -47,7 +47,7 @@
     <string name="surveys">Umfragen: mehr verdienen</string>
     <string name="survey_demo_title">Demo-Umfrage</string>
     <string name="survey_demo_body">Echte BitLabs-Umfragen erscheinen hier, sobald dein App Token hinterlegt ist. Tippe auf Abschließen, um eine zu simulieren.</string>
-    <string name="survey_complete">Abschließen +100 MB</string>
+    <string name="survey_complete">Abschließen +1.000 🍯</string>
     <string name="kind_survey">Umfrage abgeschlossen</string>
     <string name="close">Schließen</string>
 
@@ -69,13 +69,13 @@
 
     <string name="vault_title">Deine MB sind sicher im Tresor</string>
     <string name="vault_soon">Gigas kommen bald</string>
-    <string name="vault_body">Bald tauschst du deine MB gegen echtes Internet auf einer GigaBee-eSIM (USA und Europa). Schau weiter Werbung: Alles, was du verdienst, bleibt gespeichert.</string>
+    <string name="vault_body">Bald werden deine Datenkarten zu echtem Internet auf einer GigaBee-eSIM (USA und Europa).</string>
     <string name="home_vault">Deine MB landen direkt in deinem Tresor. Gigas kommen bald!</string>
 
     <string name="tab_top">Top</string>
     <string name="streak_label">🔥 %1$d Tage</string>
     <string name="streak_bonus">Bonus +%1$d %%</string>
-    <string name="streak_hint">Komm jeden Tag wieder: bis zu +%1$d %% MB pro Werbung.</string>
+    <string name="streak_hint">Komm jeden Tag wieder: bis zu +%1$d %% Honig pro Werbung.</string>
     <string name="streak_keep">Sieh dir heute 1 Werbung an, um deine %1$d-Tage-Serie zu halten!</string>
     <string name="top_title">Top der Woche</string>
     <string name="top_you">Du · Platz %1$d diese Woche</string>
@@ -95,4 +95,32 @@
     <string name="notif_title">Deine Werbungen sind bereit 🐝</string>
     <string name="notif_body">Schau heute, um deine Serie zu halten und deinen Tresor zu füllen.</string>
     <string name="notif_channel">Tägliche Erinnerung</string>
+
+    <string name="tab_wheel">Rad</string>
+    <string name="honey_unit">Honigtropfen</string>
+    <string name="of_spin">von %1$s · nächster Dreh</string>
+    <string name="spin_ready">Dreh bereit!</string>
+    <string name="go_spin">Rad drehen →</string>
+    <string name="helper_honey">Sammle Honig 🍯: tausche ihn gegen Datenkarten oder versuch dein Glück am Rad.</string>
+    <string name="wheel_title">Glücksrad</string>
+    <string name="wheel_spin">Drehen · %1$s 🍯</string>
+    <string name="wheel_need">Du brauchst %1$s 🍯</string>
+    <string name="wheel_odds">Chancen</string>
+    <string name="wheel_note">Jeder Dreh gewinnt eine Datenkarte. Bald werden Karten zu echtem Internet.</string>
+    <string name="won_title">Gewonnen!</string>
+    <string name="won_ok">Einsammeln</string>
+    <string name="card_header">DATENKARTE</string>
+    <string name="rarity_common">Gewöhnlich</string>
+    <string name="rarity_uncommon">Ungewöhnlich</string>
+    <string name="rarity_rare">Selten</string>
+    <string name="rarity_epic">★ Episch</string>
+    <string name="rarity_legendary">★ Legendär</string>
+    <string name="shop_title">Honig gegen Daten tauschen</string>
+    <string name="cards_title">Meine Datenkarten</string>
+    <string name="cards_empty">Noch keine Karten. Dreh am Rad oder tausche Honig gegen deine erste Karte.</string>
+    <string name="co_total">Gesamt: %1$s Daten</string>
+    <string name="bought">%1$s-Karte hinzugefügt</string>
+    <string name="not_enough_honey">Noch nicht genug Honig</string>
+    <string name="kind_buy">Honig → Daten</string>
+    <string name="card_label">%1$s-Karte</string>
 </resources>

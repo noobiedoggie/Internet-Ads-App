@@ -49,7 +49,7 @@
     <string name="surveys">Surveys: earn more</string>
     <string name="survey_demo_title">Demo survey</string>
     <string name="survey_demo_body">Real BitLabs surveys show up here once you add your App Token. Tap Complete to simulate one.</string>
-    <string name="survey_complete">Complete +100 MB</string>
+    <string name="survey_complete">Complete +1,000 🍯</string>
     <string name="kind_survey">Survey completed</string>
     <string name="close">Close</string>
 
@@ -71,13 +71,13 @@
 
     <string name="vault_title">Your MB are safe in the vault</string>
     <string name="vault_soon">Gigas coming soon</string>
-    <string name="vault_body">Soon you’ll swap your MB for real internet on a GigaBee eSIM (USA and Europe). Keep watching ads: everything you earn is kept.</string>
+    <string name="vault_body">Soon your data cards turn into real internet on a GigaBee eSIM (USA and Europe).</string>
     <string name="home_vault">Your MB go straight into your vault. Gigas coming soon!</string>
 
     <string name="tab_top">Top</string>
     <string name="streak_label">🔥 %1$d days</string>
     <string name="streak_bonus">Bonus +%1$d%%</string>
-    <string name="streak_hint">Come back every day: up to +%1$d%% MB per ad.</string>
+    <string name="streak_hint">Come back every day: up to +%1$d%% honey per ad.</string>
     <string name="streak_keep">Watch 1 ad today to keep your %1$d-day streak!</string>
     <string name="top_title">This week’s top</string>
     <string name="top_you">You · #%1$d this week</string>
@@ -97,4 +97,32 @@
     <string name="notif_title">Your ads are ready 🐝</string>
     <string name="notif_body">Watch today to keep your streak and fill your vault.</string>
     <string name="notif_channel">Daily reminder</string>
+
+    <string name="tab_wheel">Wheel</string>
+    <string name="honey_unit">honey drops</string>
+    <string name="of_spin">of %1$s · next spin</string>
+    <string name="spin_ready">Spin ready!</string>
+    <string name="go_spin">Spin the wheel →</string>
+    <string name="helper_honey">Earn honey 🍯: swap it for data cards or try your luck on the wheel.</string>
+    <string name="wheel_title">Lucky wheel</string>
+    <string name="wheel_spin">Spin · %1$s 🍯</string>
+    <string name="wheel_need">You need %1$s 🍯</string>
+    <string name="wheel_odds">Odds</string>
+    <string name="wheel_note">Every spin wins a data card. Cards will soon turn into real internet.</string>
+    <string name="won_title">You won!</string>
+    <string name="won_ok">Collect</string>
+    <string name="card_header">DATA CARD</string>
+    <string name="rarity_common">Common</string>
+    <string name="rarity_uncommon">Uncommon</string>
+    <string name="rarity_rare">Rare</string>
+    <string name="rarity_epic">★ Epic</string>
+    <string name="rarity_legendary">★ Legendary</string>
+    <string name="shop_title">Swap honey for data</string>
+    <string name="cards_title">My data cards</string>
+    <string name="cards_empty">No cards yet. Spin the wheel or swap honey to get your first one.</string>
+    <string name="co_total">Total: %1$s of data</string>
+    <string name="bought">%1$s card added</string>
+    <string name="not_enough_honey">Not enough honey yet</string>
+    <string name="kind_buy">Honey → data</string>
+    <string name="card_label">%1$s card</string>
 </resources>

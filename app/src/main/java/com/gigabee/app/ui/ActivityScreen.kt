@@ -36,6 +36,7 @@ import com.gigabee.app.R
 import com.gigabee.app.ads.BannerAd
 import com.gigabee.app.data.LedgerEntry
 import com.gigabee.app.data.formatData
+import com.gigabee.app.data.formatHoney
 import com.gigabee.app.ui.theme.Bee
 import kotlin.math.abs
 
@@ -67,13 +68,15 @@ fun ActivityScreen(ui: UiState) {
 
 @Composable
 private fun EntryRow(e: LedgerEntry) {
-    val earn = e.deltaKb > 0
+    val earn = e.amount > 0
     val title = stringResource(
         when (e.kind) {
             "ad" -> R.string.kind_ad
             "redeem" -> R.string.kind_redeem
             "refund" -> R.string.kind_refund
             "survey" -> R.string.kind_survey
+            "spin" -> R.string.wheel_title
+            "buy" -> R.string.kind_buy
             else -> R.string.kind_bonus
         },
     )
@@ -82,15 +85,17 @@ private fun EntryRow(e: LedgerEntry) {
         "failed" -> stringResource(R.string.status_failed)
         else -> null
     }
+    val card = e.cardKb?.let { stringResource(R.string.card_label, formatData(it)) }
     val subtitle = listOfNotNull(
         DateUtils.getRelativeTimeSpanString(e.timeMillis).toString(),
+        card,
         e.note,
         status,
     ).joinToString(" · ")
     val icon = when (e.kind) {
         "ad" -> Icons.Rounded.PlayArrow
         "redeem" -> Icons.AutoMirrored.Rounded.Send
-        "refund" -> Icons.Rounded.Refresh
+        "refund", "spin" -> Icons.Rounded.Refresh
         else -> Icons.Rounded.Star
     }
 
@@ -107,7 +112,8 @@ private fun EntryRow(e: LedgerEntry) {
             Text(subtitle, color = Bee.Muted, fontSize = 12.sp)
         }
         Text(
-            (if (earn) "+" else "−") + formatData(abs(e.deltaKb)),
+            (if (earn) "+" else "−") +
+                if (e.currency == "honey") formatHoney(abs(e.amount)) + " 🍯" else formatData(abs(e.amount)),
             color = if (earn) Bee.Yellow else Bee.Text,
             fontWeight = FontWeight.Bold,
         )

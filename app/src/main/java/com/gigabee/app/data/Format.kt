@@ -29,3 +29,6 @@ fun maskPhone(phone: String): String {
     val digits = phone.filter { it.isDigit() }
     return if (digits.length <= 4) digits else "•••• " + digits.takeLast(4)
 }
+
+/** Honey drops with thousands separators, e.g. 1 234. */
+fun formatHoney(drops: Long): String = NumberFormat.getIntegerInstance().format(drops)
