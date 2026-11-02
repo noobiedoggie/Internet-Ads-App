@@ -43,4 +43,11 @@
 
     <string name="error_generic">Etwas ist schiefgelaufen. Prüfe deine Verbindung.</string>
     <string name="retry">Erneut versuchen</string>
+
+    <string name="surveys">Umfragen: mehr verdienen</string>
+    <string name="survey_demo_title">Demo-Umfrage</string>
+    <string name="survey_demo_body">Echte BitLabs-Umfragen erscheinen hier, sobald dein App Token hinterlegt ist. Tippe auf Abschließen, um eine zu simulieren.</string>
+    <string name="survey_complete">Abschließen +100 MB</string>
+    <string name="kind_survey">Umfrage abgeschlossen</string>
+    <string name="close">Schließen</string>
 </resources>

@@ -62,6 +62,32 @@ put your real AdMob eCPM and your eSIM supplier's price per GB into `country_con
 Before publishing in the EU you also need a privacy policy URL, and a "delete my account" option
 because the Play Store requires one for apps that create accounts.
 
+## BitLabs surveys (bigger rewards)
+
+The Earn screen has a **Surveys** button that opens the BitLabs survey wall inside the app. In the demo
+(no token) it shows a fake survey worth 100 MB so you can see the flow.
+
+1. Sign up at bitlabs.ai, create an app, and copy the **App Token** and **App Secret**.
+2. In the app settings, set the currency name to **MB** and choose how many MB users get per $1 you earn.
+   To keep the same margin as ads: `MB per $1 = (1 − margin) ÷ cost per MB`.
+   Example: $2/GB and a 35% margin gives 0.65 ÷ (2/1024) ≈ **333 MB per $1**.
+3. Set the callback URL, and check that the placeholder names match the ones listed in the dashboard:
+   `https://<project>.supabase.co/functions/v1/bitlabs-callback?uid=[%UID%]&val=[%VAL%]&tx=[%TX%]&type=[%TYPE%]`
+4. Deploy and add the secrets:
+   ```bash
+   supabase db push
+   ```
+   ```bash
+   supabase functions deploy bitlabs-callback --no-verify-jwt
+   ```
+   ```bash
+   supabase secrets set BITLABS_APP_SECRET=... BITLABS_CALLBACK_URL=https://<project>.supabase.co/functions/v1/bitlabs-callback
+   ```
+5. Add `BITLABS_TOKEN` as a GitHub secret (or in `gradle.properties`) and push. The next APK opens real surveys.
+
+Only BitLabs' signed callback can add survey MB. Pending callbacks are ignored, and reversals are
+deducted (never below 0).
+
 ## ⚠️ Read before launch: ad network rules
 
 AdMob (and Unity Ads) **don't allow rewards with real-world value** that can be used outside your app.

@@ -22,7 +22,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.List
 import androidx.compose.material.icons.automirrored.rounded.Send
 import androidx.compose.material.icons.rounded.PlayArrow
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -58,6 +60,7 @@ fun AppRoot(vm: AppViewModel) {
 
     LaunchedEffect(ui.messageId) { ui.message?.let { snackbar.showSnackbar(it) } }
 
+    Box(Modifier.fillMaxSize()) {
     Scaffold(
         containerColor = Bee.Black,
         snackbarHost = {
@@ -86,11 +89,32 @@ fun AppRoot(vm: AppViewModel) {
                     onWatch = { activity?.let(vm::watchAd) },
                     onRedeem = { tab = 1 },
                     onDebugBonus = vm::debugBonus,
+                    onSurveys = if (ui.surveysAvailable) vm::openSurveys else null,
                 )
                 tab == 1 -> RedeemScreen(ui, onRedeem = { bundle, phone -> vm.redeem(bundle.id, phone) })
                 else -> ActivityScreen(ui)
             }
         }
+    }
+
+    ui.surveyUrl?.let { SurveyScreen(it, onClose = vm::closeSurveys) }
+    }
+
+    if (ui.showDemoSurvey) {
+        AlertDialog(
+            onDismissRequest = vm::dismissDemoSurvey,
+            containerColor = Bee.Surface,
+            title = { Text(stringResource(R.string.survey_demo_title), color = Bee.Text, fontWeight = FontWeight.Bold) },
+            text = { Text(stringResource(R.string.survey_demo_body), color = Bee.Muted) },
+            confirmButton = {
+                TextButton(onClick = vm::completeDemoSurvey) {
+                    Text(stringResource(R.string.survey_complete), color = Bee.Yellow, fontWeight = FontWeight.Bold)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = vm::dismissDemoSurvey) { Text(stringResource(R.string.close), color = Bee.Muted) }
+            },
+        )
     }
 }
 

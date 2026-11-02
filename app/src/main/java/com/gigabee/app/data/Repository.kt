@@ -22,4 +22,7 @@ interface Repository {
 
     /** Debug builds only: lets you test redemption without watching hundreds of ads. */
     suspend fun debugBonus() {}
+
+    /** Demo only: simulates a completed survey when no BitLabs token is configured. */
+    suspend fun demoSurvey() {}
 }

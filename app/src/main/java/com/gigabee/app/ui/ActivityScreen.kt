@@ -73,6 +73,7 @@ private fun EntryRow(e: LedgerEntry) {
             "ad" -> R.string.kind_ad
             "redeem" -> R.string.kind_redeem
             "refund" -> R.string.kind_refund
+            "survey" -> R.string.kind_survey
             else -> R.string.kind_bonus
         },
     )

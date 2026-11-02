@@ -43,4 +43,11 @@
 
     <string name="error_generic">Qualcosa è andato storto. Controlla la connessione.</string>
     <string name="retry">Riprova</string>
+
+    <string name="surveys">Sondaggi: guadagna di più</string>
+    <string name="survey_demo_title">Sondaggio demo</string>
+    <string name="survey_demo_body">I veri sondaggi BitLabs compariranno qui dopo aver aggiunto il tuo App Token. Tocca Completa per simularne uno.</string>
+    <string name="survey_complete">Completa +100 MB</string>
+    <string name="kind_survey">Sondaggio completato</string>
+    <string name="close">Chiudi</string>
 </resources>

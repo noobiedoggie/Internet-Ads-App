@@ -45,4 +45,11 @@
 
     <string name="error_generic">Something went wrong. Check your connection.</string>
     <string name="retry">Retry</string>
+
+    <string name="surveys">Surveys: earn more</string>
+    <string name="survey_demo_title">Demo survey</string>
+    <string name="survey_demo_body">Real BitLabs surveys show up here once you add your App Token. Tap Complete to simulate one.</string>
+    <string name="survey_complete">Complete +100 MB</string>
+    <string name="kind_survey">Survey completed</string>
+    <string name="close">Close</string>
 </resources>

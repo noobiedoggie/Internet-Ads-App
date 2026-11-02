@@ -7,5 +7,8 @@ enable_anonymous_sign_ins = true
 [functions.admob-ssv]
 verify_jwt = false
 
+[functions.bitlabs-callback]
+verify_jwt = false
+
 [functions.redeem]
 verify_jwt = true

@@ -35,6 +35,7 @@ android {
         buildConfigField("String", "ADMOB_BANNER_ID", "\"${cfg("ADMOB_BANNER_ID", testBannerId)}\"")
         buildConfigField("String", "SUPABASE_URL", "\"${cfg("SUPABASE_URL").trimEnd('/')}\"")
         buildConfigField("String", "SUPABASE_ANON_KEY", "\"${cfg("SUPABASE_ANON_KEY")}\"")
+        buildConfigField("String", "BITLABS_TOKEN", "\"${cfg("BITLABS_TOKEN")}\"")
     }
 
     signingConfigs {

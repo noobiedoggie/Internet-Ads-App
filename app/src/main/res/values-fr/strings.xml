@@ -43,4 +43,11 @@
 
     <string name="error_generic">Un problème est survenu. Vérifiez votre connexion.</string>
     <string name="retry">Réessayer</string>
+
+    <string name="surveys">Sondages : gagnez plus</string>
+    <string name="survey_demo_title">Sondage démo</string>
+    <string name="survey_demo_body">Les vrais sondages BitLabs apparaîtront ici une fois votre App Token ajouté. Touchez Terminer pour en simuler un.</string>
+    <string name="survey_complete">Terminer +100 Mo</string>
+    <string name="kind_survey">Sondage terminé</string>
+    <string name="close">Fermer</string>
 </resources>

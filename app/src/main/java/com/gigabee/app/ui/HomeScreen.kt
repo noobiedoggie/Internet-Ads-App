@@ -19,6 +19,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.PlayArrow
+import androidx.compose.material.icons.rounded.Star
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -49,6 +55,7 @@ fun HomeScreen(
     onWatch: () -> Unit,
     onRedeem: () -> Unit,
     onDebugBonus: () -> Unit,
+    onSurveys: (() -> Unit)? = null,
 ) {
     val s = ui.state ?: return
     val target = (s.balanceKb.toFloat() / s.goalKb).coerceIn(0f, 1f)
@@ -129,6 +136,21 @@ fun HomeScreen(
             icon = Icons.Rounded.PlayArrow,
             loading = !s.capReached && (ui.verifying || (!ui.adReady && !ui.busy)),
         )
+
+        if (onSurveys != null) {
+            Spacer(Modifier.height(12.dp))
+            OutlinedButton(
+                onClick = onSurveys,
+                modifier = Modifier.fillMaxWidth().height(52.dp),
+                shape = RoundedCornerShape(26.dp),
+                border = BorderStroke(1.5.dp, Bee.Yellow),
+                colors = ButtonDefaults.outlinedButtonColors(contentColor = Bee.Yellow),
+            ) {
+                Icon(Icons.Rounded.Star, contentDescription = null, modifier = Modifier.size(20.dp))
+                Spacer(Modifier.width(8.dp))
+                Text(stringResource(R.string.surveys), fontSize = 16.sp, fontWeight = FontWeight.Bold)
+            }
+        }
 
         val redeemable = s.redeemable
         Column(

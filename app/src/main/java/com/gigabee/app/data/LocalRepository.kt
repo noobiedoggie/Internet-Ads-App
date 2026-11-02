@@ -90,4 +90,6 @@ class LocalRepository(context: Context) : Repository {
     }
 
     override suspend fun debugBonus() = addEntry(100 * KB_PER_MB, "bonus")
+
+    override suspend fun demoSurvey() = addEntry(100 * KB_PER_MB, "survey", "Demo")
 }

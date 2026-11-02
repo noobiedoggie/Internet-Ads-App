@@ -43,4 +43,11 @@
 
     <string name="error_generic">Algo salió mal. Revisa tu conexión.</string>
     <string name="retry">Reintentar</string>
+
+    <string name="surveys">Encuestas: gana más</string>
+    <string name="survey_demo_title">Encuesta demo</string>
+    <string name="survey_demo_body">Las encuestas reales de BitLabs aparecen aquí cuando agregues tu App Token. Toca Completar para simular una.</string>
+    <string name="survey_complete">Completar +100 MB</string>
+    <string name="kind_survey">Encuesta completada</string>
+    <string name="close">Cerrar</string>
 </resources>
