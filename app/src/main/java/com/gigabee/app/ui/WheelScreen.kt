@@ -65,7 +65,7 @@ import com.gigabee.app.data.WheelPrize
 import com.gigabee.app.data.dataParts
 import com.gigabee.app.data.formatData
 import com.gigabee.app.ui.theme.Bee
-import com.gigabee.app.ui.theme.Grotesk
+import com.gigabee.app.ui.theme.AppFont
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
 import java.text.NumberFormat
@@ -200,7 +200,7 @@ fun LuckyWheel(segments: List<Long>, rotationDeg: Float, modifier: Modifier = Mo
         val sweep = 360f / n
         val rimW = 5.dp.toPx()
         val lineW = 2.5.dp.toPx()
-        val style = TextStyle(color = Bee.Ink, fontSize = (r * 0.095f).toSp(), fontWeight = FontWeight.Bold, fontFamily = Grotesk)
+        val style = TextStyle(color = Bee.Ink, fontSize = (r * 0.095f).toSp(), fontWeight = FontWeight.Bold, fontFamily = AppFont)
 
         rotate(rotationDeg, c) {
             drawCircle(Bee.Paper, r, c)

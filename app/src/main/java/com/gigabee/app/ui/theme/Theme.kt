@@ -25,12 +25,12 @@ object Bee {
     val Ink = Color(0xFF0A0A0A)   // outlines on paper
 }
 
-/** Space Grotesk (OFL), static weights so bold renders as bold on every phone. */
-val Grotesk = FontFamily(
-    Font(R.font.space_grotesk_regular, FontWeight.Normal),
-    Font(R.font.space_grotesk_medium, FontWeight.Medium),
-    Font(R.font.space_grotesk_semibold, FontWeight.SemiBold),
-    Font(R.font.space_grotesk_bold, FontWeight.Bold),
+/** Inter (OFL), static weights trimmed to Latin so bold renders as bold on every phone. */
+val AppFont = FontFamily(
+    Font(R.font.inter_regular, FontWeight.Normal),
+    Font(R.font.inter_medium, FontWeight.Medium),
+    Font(R.font.inter_semibold, FontWeight.SemiBold),
+    Font(R.font.inter_bold, FontWeight.Bold),
 )
 
 private fun Typography.withFont(family: FontFamily): Typography {
@@ -61,7 +61,7 @@ fun GigaBeeTheme(content: @Composable () -> Unit) {
             outline = Bee.Line,
             error = Bee.Red,
         ),
-        typography = Typography().withFont(Grotesk),
+        typography = Typography().withFont(AppFont),
         content = content,
     )
 }
