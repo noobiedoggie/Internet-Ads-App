@@ -32,7 +32,9 @@ android {
 
         manifestPlaceholders["admobAppId"] = cfg("ADMOB_APP_ID", testAppId)
         buildConfigField("String", "ADMOB_REWARDED_ID", "\"${cfg("ADMOB_REWARDED_ID", testRewardedId)}\"")
-        buildConfigField("String", "ADMOB_BANNER_ID", "\"${cfg("ADMOB_BANNER_ID", testBannerId)}\"")
+        // With a real AdMob app but no banner unit, show no banner (never mix test units into a live app).
+        val bannerDefault = if (cfg("ADMOB_APP_ID").isBlank()) testBannerId else ""
+        buildConfigField("String", "ADMOB_BANNER_ID", "\"${cfg("ADMOB_BANNER_ID", bannerDefault)}\"")
         buildConfigField("String", "SUPABASE_URL", "\"${cfg("SUPABASE_URL").trimEnd('/')}\"")
         buildConfigField("String", "SUPABASE_ANON_KEY", "\"${cfg("SUPABASE_ANON_KEY")}\"")
         buildConfigField("String", "BITLABS_TOKEN", "\"${cfg("BITLABS_TOKEN")}\"")
