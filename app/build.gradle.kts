@@ -38,6 +38,13 @@ android {
     }
 
     signingConfigs {
+        // Shared debug key (public, not a secret) so every CI build installs over the previous one.
+        getByName("debug") {
+            storeFile = file("debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
         if (keystoreFile.isNotBlank()) {
             create("release") {
                 storeFile = file(keystoreFile)
