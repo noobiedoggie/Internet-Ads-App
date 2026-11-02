@@ -101,7 +101,7 @@
     <string name="of_spin">su %1$s · prossimo giro</string>
     <string name="spin_ready">Giro pronto!</string>
     <string name="go_spin">Gira la ruota →</string>
-    <string name="helper_honey">Guadagna miele 🍯: scambialo con carte dati o tenta la fortuna alla ruota.</string>
+    <string name="helper_honey">Guadagna miele: scambialo con carte dati o tenta la fortuna alla ruota.</string>
     <string name="wheel_title">Ruota della fortuna</string>
     <string name="wheel_spin">Gira · %1$s 🍯</string>
     <string name="wheel_need">Ti servono %1$s 🍯</string>
@@ -113,8 +113,8 @@
     <string name="rarity_common">Comune</string>
     <string name="rarity_uncommon">Non comune</string>
     <string name="rarity_rare">Rara</string>
-    <string name="rarity_epic">★ Epica</string>
-    <string name="rarity_legendary">★ Leggendaria</string>
+    <string name="rarity_epic">Epica</string>
+    <string name="rarity_legendary">Leggendaria</string>
     <string name="shop_title">Scambia miele con dati</string>
     <string name="cards_title">Le mie carte dati</string>
     <string name="cards_empty">Ancora nessuna carta. Gira la ruota o scambia miele per ottenere la prima.</string>
@@ -127,4 +127,5 @@
     <string name="spin_action">Gira</string>
     <string name="need_honey">Ti servono</string>
     <string name="co_label">I tuoi dati</string>
+    <string name="kind_referral">Invito</string>
 </resources>

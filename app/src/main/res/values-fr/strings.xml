@@ -101,7 +101,7 @@
     <string name="of_spin">sur %1$s · prochain tour</string>
     <string name="spin_ready">Tour disponible !</string>
     <string name="go_spin">Tourner la roue →</string>
-    <string name="helper_honey">Gagnez du miel 🍯 : échangez-le contre des cartes de co ou tentez votre chance à la roue.</string>
+    <string name="helper_honey">Gagnez du miel : échangez-le contre des cartes de co ou tentez votre chance à la roue.</string>
     <string name="wheel_title">Roue de la chance</string>
     <string name="wheel_spin">Tourner · %1$s 🍯</string>
     <string name="wheel_need">Il vous faut %1$s 🍯</string>
@@ -113,8 +113,8 @@
     <string name="rarity_common">Commune</string>
     <string name="rarity_uncommon">Peu commune</string>
     <string name="rarity_rare">Rare</string>
-    <string name="rarity_epic">★ Épique</string>
-    <string name="rarity_legendary">★ Légendaire</string>
+    <string name="rarity_epic">Épique</string>
+    <string name="rarity_legendary">Légendaire</string>
     <string name="shop_title">Échanger du miel contre de la co</string>
     <string name="cards_title">Mes cartes de co</string>
     <string name="cards_empty">Pas encore de cartes. Tournez la roue ou échangez du miel pour obtenir la première.</string>
@@ -127,4 +127,5 @@
     <string name="spin_action">Tourner</string>
     <string name="need_honey">Il vous faut</string>
     <string name="co_label">Votre co</string>
+    <string name="kind_referral">Parrainage</string>
 </resources>

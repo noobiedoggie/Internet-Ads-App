@@ -42,6 +42,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gigabee.app.R
@@ -93,8 +94,14 @@ private fun MeCard(s: AppState, myRank: Int?, myScore: Long, onReroll: () -> Uni
                 Spacer(Modifier.height(2.dp))
                 if (myRank != null) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(stringResource(R.string.top_you, myRank) + "  ·  ", color = Bee.Muted, fontSize = 13.sp)
                         HoneyAmount(myScore, fontSize = 13.sp, color = Bee.Yellow)
+                        Text(
+                            "  ·  " + stringResource(R.string.top_you, myRank),
+                            color = Bee.Muted,
+                            fontSize = 13.sp,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
                     }
                 } else {
                     Text(stringResource(R.string.top_unranked), color = Bee.Muted, fontSize = 13.sp)

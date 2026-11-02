@@ -101,7 +101,7 @@
     <string name="of_spin">de %1$s · próximo giro</string>
     <string name="spin_ready">¡Giro listo!</string>
     <string name="go_spin">Girar la ruleta →</string>
-    <string name="helper_honey">Gana miel 🍯: cámbiala por tarjetas de datos o prueba suerte en la ruleta.</string>
+    <string name="helper_honey">Gana miel: cámbiala por tarjetas de datos o prueba suerte en la ruleta.</string>
     <string name="wheel_title">Ruleta de la suerte</string>
     <string name="wheel_spin">Girar · %1$s 🍯</string>
     <string name="wheel_need">Necesitas %1$s 🍯</string>
@@ -113,8 +113,8 @@
     <string name="rarity_common">Común</string>
     <string name="rarity_uncommon">Poco común</string>
     <string name="rarity_rare">Rara</string>
-    <string name="rarity_epic">★ Épica</string>
-    <string name="rarity_legendary">★ Legendaria</string>
+    <string name="rarity_epic">Épica</string>
+    <string name="rarity_legendary">Legendaria</string>
     <string name="shop_title">Cambia miel por datos</string>
     <string name="cards_title">Mis tarjetas de datos</string>
     <string name="cards_empty">Aún no tienes tarjetas. Gira la ruleta o cambia miel para conseguir la primera.</string>
@@ -127,4 +127,5 @@
     <string name="spin_action">Girar</string>
     <string name="need_honey">Necesitas</string>
     <string name="co_label">Tus datos</string>
+    <string name="kind_referral">Invitación</string>
 </resources>

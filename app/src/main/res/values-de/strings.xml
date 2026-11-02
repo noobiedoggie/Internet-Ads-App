@@ -101,7 +101,7 @@
     <string name="of_spin">von %1$s · nächster Dreh</string>
     <string name="spin_ready">Dreh bereit!</string>
     <string name="go_spin">Rad drehen →</string>
-    <string name="helper_honey">Sammle Honig 🍯: tausche ihn gegen Datenkarten oder versuch dein Glück am Rad.</string>
+    <string name="helper_honey">Sammle Honig: tausche ihn gegen Datenkarten oder versuch dein Glück am Rad.</string>
     <string name="wheel_title">Glücksrad</string>
     <string name="wheel_spin">Drehen · %1$s 🍯</string>
     <string name="wheel_need">Du brauchst %1$s 🍯</string>
@@ -113,8 +113,8 @@
     <string name="rarity_common">Gewöhnlich</string>
     <string name="rarity_uncommon">Ungewöhnlich</string>
     <string name="rarity_rare">Selten</string>
-    <string name="rarity_epic">★ Episch</string>
-    <string name="rarity_legendary">★ Legendär</string>
+    <string name="rarity_epic">Episch</string>
+    <string name="rarity_legendary">Legendär</string>
     <string name="shop_title">Honig gegen Daten tauschen</string>
     <string name="cards_title">Meine Datenkarten</string>
     <string name="cards_empty">Noch keine Karten. Dreh am Rad oder tausche Honig gegen deine erste Karte.</string>
@@ -127,4 +127,5 @@
     <string name="spin_action">Drehen</string>
     <string name="need_honey">Du brauchst</string>
     <string name="co_label">Deine Daten</string>
+    <string name="kind_referral">Einladung</string>
 </resources>

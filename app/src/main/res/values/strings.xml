@@ -103,7 +103,7 @@
     <string name="of_spin">of %1$s · next spin</string>
     <string name="spin_ready">Spin ready!</string>
     <string name="go_spin">Spin the wheel →</string>
-    <string name="helper_honey">Earn honey 🍯: swap it for data cards or try your luck on the wheel.</string>
+    <string name="helper_honey">Earn honey: swap it for data cards or try your luck on the wheel.</string>
     <string name="wheel_title">Lucky wheel</string>
     <string name="wheel_spin">Spin · %1$s 🍯</string>
     <string name="wheel_need">You need %1$s 🍯</string>
@@ -115,8 +115,8 @@
     <string name="rarity_common">Common</string>
     <string name="rarity_uncommon">Uncommon</string>
     <string name="rarity_rare">Rare</string>
-    <string name="rarity_epic">★ Epic</string>
-    <string name="rarity_legendary">★ Legendary</string>
+    <string name="rarity_epic">Epic</string>
+    <string name="rarity_legendary">Legendary</string>
     <string name="shop_title">Swap honey for data</string>
     <string name="cards_title">My data cards</string>
     <string name="cards_empty">No cards yet. Spin the wheel or swap honey to get your first one.</string>
@@ -129,4 +129,5 @@
     <string name="spin_action">Spin</string>
     <string name="need_honey">You need</string>
     <string name="co_label">Your data</string>
+    <string name="kind_referral">Friend invite</string>
 </resources>

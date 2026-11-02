@@ -88,7 +88,7 @@ fun HoneyDrop(modifier: Modifier = Modifier, size: Dp = 16.dp, color: Color = Be
     }
 }
 
-/** "◆ 1 234": drop icon + amount. */
+/** Balances read "◆ 1 234"; signed amounts (with [prefix]) read "+22 ◆". */
 @Composable
 fun HoneyAmount(
     amount: Long,
@@ -99,11 +99,18 @@ fun HoneyAmount(
     prefix: String = "",
     weight: FontWeight = FontWeight.Bold,
 ) {
+    val gap = (fontSize.value * 0.3f).dp
+    val drop = (fontSize.value * 0.95f).dp
     Row(modifier, verticalAlignment = Alignment.CenterVertically) {
-        if (prefix.isNotEmpty()) Text(prefix, color = color, fontSize = fontSize, fontWeight = weight)
-        HoneyDrop(size = (fontSize.value * 0.95f).dp, color = dropColor)
-        Spacer(Modifier.width((fontSize.value * 0.3f).dp))
-        Text(formatHoney(amount), color = color, fontSize = fontSize, fontWeight = weight)
+        if (prefix.isEmpty()) {
+            HoneyDrop(size = drop, color = dropColor)
+            Spacer(Modifier.width(gap))
+            Text(formatHoney(amount), color = color, fontSize = fontSize, fontWeight = weight)
+        } else {
+            Text(prefix + formatHoney(amount), color = color, fontSize = fontSize, fontWeight = weight)
+            Spacer(Modifier.width(gap))
+            HoneyDrop(size = drop, color = dropColor)
+        }
     }
 }
 

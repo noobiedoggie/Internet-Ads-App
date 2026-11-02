@@ -73,17 +73,8 @@ fun ActivityScreen(ui: UiState) {
 @Composable
 private fun EntryRow(e: LedgerEntry) {
     val earn = e.amount > 0
-    val title = stringResource(
-        when (e.kind) {
-            "ad" -> R.string.kind_ad
-            "redeem" -> R.string.kind_redeem
-            "refund" -> R.string.kind_refund
-            "survey" -> R.string.kind_survey
-            "spin" -> R.string.wheel_title
-            "buy" -> R.string.kind_buy
-            else -> R.string.kind_bonus
-        },
-    )
+    val referral = e.kind == "bonus" && e.note == "Referral"
+    val title = stringResource(if (referral) R.string.kind_referral else kindTitle(e.kind))
     val status = when (e.status) {
         "pending" -> stringResource(R.string.status_pending)
         "failed" -> stringResource(R.string.status_failed)
@@ -93,7 +84,7 @@ private fun EntryRow(e: LedgerEntry) {
     val subtitle = listOfNotNull(
         DateUtils.getRelativeTimeSpanString(e.timeMillis).toString(),
         card,
-        e.note,
+        if (referral) null else e.note,
         status,
     ).joinToString(" · ")
     val icon = when (e.kind) {
@@ -136,4 +127,14 @@ private fun EntryRow(e: LedgerEntry) {
             )
         }
     }
+}
+
+private fun kindTitle(kind: String): Int = when (kind) {
+    "ad" -> R.string.kind_ad
+    "redeem" -> R.string.kind_redeem
+    "refund" -> R.string.kind_refund
+    "survey" -> R.string.kind_survey
+    "spin" -> R.string.wheel_title
+    "buy" -> R.string.kind_buy
+    else -> R.string.kind_bonus
 }

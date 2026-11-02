@@ -25,12 +25,12 @@ object Bee {
     val Ink = Color(0xFF0A0A0A)   // outlines on paper
 }
 
-/** Space Grotesk (variable font, OFL): one family for the whole app. */
+/** Space Grotesk (OFL), static weights so bold renders as bold on every phone. */
 val Grotesk = FontFamily(
-    Font(R.font.space_grotesk, FontWeight.Normal),
-    Font(R.font.space_grotesk, FontWeight.Medium),
-    Font(R.font.space_grotesk, FontWeight.SemiBold),
-    Font(R.font.space_grotesk, FontWeight.Bold),
+    Font(R.font.space_grotesk_regular, FontWeight.Normal),
+    Font(R.font.space_grotesk_medium, FontWeight.Medium),
+    Font(R.font.space_grotesk_semibold, FontWeight.SemiBold),
+    Font(R.font.space_grotesk_bold, FontWeight.Bold),
 )
 
 private fun Typography.withFont(family: FontFamily): Typography {
