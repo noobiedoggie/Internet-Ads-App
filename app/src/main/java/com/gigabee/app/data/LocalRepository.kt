@@ -15,10 +15,15 @@ class LocalRepository(context: Context) : Repository {
         Economics.DEMO_ECPM_USD, Economics.DEMO_COST_PER_GB_USD, Economics.DEMO_MARGIN,
     )
     private val bundles = listOf(
-        DataBundle("demo-500m", "Demo", "500 MB", 500 * KB_PER_MB),
-        DataBundle("demo-1g", "Demo", "1 GB", KB_PER_GB),
-        DataBundle("demo-3g", "Demo", "3 GB", 3 * KB_PER_GB),
+        DataBundle("demo-us-1g", "USA", "1 GB", KB_PER_GB),
+        DataBundle("demo-us-3g", "USA", "3 GB", 3 * KB_PER_GB),
+        DataBundle("demo-eu-1g", "Europe", "1 GB", KB_PER_GB),
+        DataBundle("demo-eu-3g", "Europe", "3 GB", 3 * KB_PER_GB),
     )
+
+    private fun esim(): EsimInfo? = prefs.getString("esim_iccid", null)?.let {
+        EsimInfo(it, "demo.gigabee.app", prefs.getString("esim_code", "") ?: "")
+    }
 
     override val isDemo = true
 
@@ -35,6 +40,7 @@ class LocalRepository(context: Context) : Repository {
             dailyCap = Economics.DEMO_DAILY_CAP,
             kbPerAd = kbPerAd,
             bundles = bundles,
+            esim = esim(),
         )
     }
 
@@ -82,10 +88,17 @@ class LocalRepository(context: Context) : Repository {
         return state()
     }
 
-    override suspend fun redeem(bundleId: String, phone: String): RedeemResult {
+    override suspend fun redeem(bundleId: String): RedeemResult {
         val bundle = bundles.firstOrNull { it.id == bundleId } ?: return RedeemResult.Error("Unknown bundle")
         if (prefs.getLong("balance", 0L) < bundle.dataKb) return RedeemResult.Error("Not enough MB yet")
-        addEntry(-bundle.dataKb, "redeem", "${bundle.label} → ${maskPhone(phone)}", "success")
+        if (esim() == null) {
+            // Fake install code so the demo shows the real flow. It won't work in phone settings.
+            prefs.edit {
+                putString("esim_iccid", "8900000000000" + (100000..999999).random())
+                putString("esim_code", "DEMO-" + UUID.randomUUID().toString().take(8).uppercase())
+            }
+        }
+        addEntry(-bundle.dataKb, "redeem", "${bundle.carrier} · ${bundle.label} eSIM", "success")
         return RedeemResult.Ok
     }
 

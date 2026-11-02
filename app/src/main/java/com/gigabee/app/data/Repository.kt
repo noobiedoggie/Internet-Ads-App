@@ -18,7 +18,8 @@ interface Repository {
      */
     suspend fun onAdRewarded(previous: AppState): AppState
 
-    suspend fun redeem(bundleId: String, phone: String): RedeemResult
+    /** Adds a data bundle to the user's GigaBee eSIM (creating the eSIM on first use). */
+    suspend fun redeem(bundleId: String): RedeemResult
 
     /** Debug builds only: lets you test redemption without watching hundreds of ads. */
     suspend fun debugBonus() {}

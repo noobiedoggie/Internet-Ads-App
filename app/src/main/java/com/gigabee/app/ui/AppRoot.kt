@@ -91,7 +91,7 @@ fun AppRoot(vm: AppViewModel) {
                     onDebugBonus = vm::debugBonus,
                     onSurveys = if (ui.surveysAvailable) vm::openSurveys else null,
                 )
-                tab == 1 -> RedeemScreen(ui, onRedeem = { bundle, phone -> vm.redeem(bundle.id, phone) })
+                tab == 1 -> RedeemScreen(ui, onRedeem = { bundle -> vm.redeem(bundle.id) })
                 else -> ActivityScreen(ui)
             }
         }

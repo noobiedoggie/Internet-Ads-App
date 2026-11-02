@@ -111,13 +111,13 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun redeem(bundleId: String, phone: String) {
+    fun redeem(bundleId: String) {
         if (_ui.value.redeeming) return
         viewModelScope.launch {
             _ui.update { it.copy(redeeming = true) }
             try {
-                when (val result = repo.redeem(bundleId, phone)) {
-                    RedeemResult.Ok -> say(text(R.string.redeem_ok))
+                when (val result = repo.redeem(bundleId)) {
+                    RedeemResult.Ok -> say(text(R.string.redeem_ok_esim))
                     is RedeemResult.Error -> say(result.message)
                 }
                 reload()

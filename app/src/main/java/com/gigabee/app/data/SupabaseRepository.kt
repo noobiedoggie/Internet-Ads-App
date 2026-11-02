@@ -75,7 +75,9 @@ class SupabaseRepository(
     override suspend fun state(): AppState {
         val json = JSONObject(authed("POST", "/rest/v1/rpc/app_state", JSONObject().put("p_country", country)))
         val arr = json.optJSONArray("bundles") ?: JSONArray()
+        val e = json.optJSONObject("esim")
         return AppState(
+            esim = e?.let { EsimInfo(it.getString("iccid"), it.getString("smdp"), it.getString("code")) },
             balanceKb = json.getLong("balance_kb"),
             adsToday = json.getInt("ads_today"),
             dailyCap = json.getInt("daily_cap"),
@@ -112,10 +114,8 @@ class SupabaseRepository(
         return state()
     }
 
-    override suspend fun redeem(bundleId: String, phone: String): RedeemResult = try {
-        val body = JSONObject(
-            authed("POST", "/functions/v1/redeem", JSONObject().put("bundle_id", bundleId).put("phone", phone)),
-        )
+    override suspend fun redeem(bundleId: String): RedeemResult = try {
+        val body = JSONObject(authed("POST", "/functions/v1/redeem", JSONObject().put("bundle_id", bundleId)))
         if (body.optBoolean("ok")) RedeemResult.Ok else RedeemResult.Error(body.optString("message", "Error"))
     } catch (e: HttpException) {
         RedeemResult.Error(e.message?.substringAfter("\"message\":\"")?.substringBefore('"') ?: "Error")

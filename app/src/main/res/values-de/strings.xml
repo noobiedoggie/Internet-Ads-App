@@ -50,4 +50,20 @@
     <string name="survey_complete">Abschließen +100 MB</string>
     <string name="kind_survey">Umfrage abgeschlossen</string>
     <string name="close">Schließen</string>
+
+    <string name="esim_title">Deine GigaBee-eSIM</string>
+    <string name="esim_none">Löse dein erstes Paket ein, um deine GigaBee-eSIM zu bekommen. Sie funktioniert auf jedem eSIM-Handy in den USA und Europa, zusätzlich zu deiner normalen SIM.</string>
+    <string name="esim_steps">Einmal installieren: Einstellungen → Netzwerk / Verbindungen → SIM → eSIM hinzufügen. Scanne diesen QR-Code von einem anderen Bildschirm oder wähle „Code manuell eingeben“ und füge den Code ein.</string>
+    <string name="esim_copy">Installationscode kopieren</string>
+    <string name="esim_copied">Code kopiert</string>
+    <string name="esim_settings">SIM-Einstellungen öffnen</string>
+    <string name="esim_show">eSIM installieren</string>
+    <string name="esim_hide">Code ausblenden</string>
+    <string name="esim_unsupported">Dieses Handy unterstützt eSIM eventuell nicht. Du kannst sie auf einem anderen eSIM-Handy installieren.</string>
+    <string name="region">Region</string>
+    <string name="get_esim">Meine eSIM + %1$s holen</string>
+    <string name="add_to_esim">%1$s zu meiner eSIM hinzufügen</string>
+    <string name="confirm_esim_body">%1$s Datenvolumen für %2$s werden deiner GigaBee-eSIM hinzugefügt.</string>
+    <string name="redeem_ok_esim">Fertig! Das Datenvolumen ist auf deiner GigaBee-eSIM. Aktiviere die eSIM in den SIM-Einstellungen.</string>
+    <string name="esim_demo_code">Demo-Code: funktioniert nicht in den Handy-Einstellungen.</string>
 </resources>

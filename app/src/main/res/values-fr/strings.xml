@@ -50,4 +50,20 @@
     <string name="survey_complete">Terminer +100 Mo</string>
     <string name="kind_survey">Sondage terminé</string>
     <string name="close">Fermer</string>
+
+    <string name="esim_title">Votre eSIM GigaBee</string>
+    <string name="esim_none">Échangez votre premier forfait pour recevoir votre eSIM GigaBee. Elle fonctionne sur tout téléphone compatible eSIM aux États-Unis et en Europe, en plus de votre SIM habituelle.</string>
+    <string name="esim_steps">À installer une seule fois : Paramètres → Réseau / Connexions → SIM → Ajouter une eSIM. Scannez ce QR depuis un autre écran, ou choisissez « Saisir le code manuellement » et collez le code.</string>
+    <string name="esim_copy">Copier le code d’installation</string>
+    <string name="esim_copied">Code copié</string>
+    <string name="esim_settings">Ouvrir les réglages SIM</string>
+    <string name="esim_show">Installer l’eSIM</string>
+    <string name="esim_hide">Masquer le code</string>
+    <string name="esim_unsupported">Ce téléphone n’est peut-être pas compatible eSIM. Vous pouvez l’installer sur un autre téléphone eSIM.</string>
+    <string name="region">Région</string>
+    <string name="get_esim">Obtenir mon eSIM + %1$s</string>
+    <string name="add_to_esim">Ajouter %1$s à mon eSIM</string>
+    <string name="confirm_esim_body">%1$s de données pour %2$s seront ajoutés à votre eSIM GigaBee.</string>
+    <string name="redeem_ok_esim">C’est fait ! Les données sont sur votre eSIM GigaBee. Activez l’eSIM dans les réglages SIM pour l’utiliser.</string>
+    <string name="esim_demo_code">Code démo : il ne fonctionne pas dans les réglages du téléphone.</string>
 </resources>

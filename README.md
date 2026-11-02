@@ -32,27 +32,42 @@ Other profit protections already built in:
 - Unredeemed balances stay as MB, and they only cost you if someone redeems them.
 - **Profit view:** `select * from economics_30d;` shows ads watched, estimated revenue and data cost per country.
 
-## Target markets: USA, France and Europe
+## Real data: the GigaBee eSIM (USA, France, Europe)
 
-The app is in English, French (with Mo/Go units), German, Italian and Spanish. Google's consent form
-for Europe (GDPR) is already built in.
+Redemptions go **only to a GigaBee eSIM**, supplied through the [eSIM Go](https://www.esim-go.com) API.
+The first redemption creates the user's eSIM and shows its install code (QR + copyable code) in the app.
+Every later redemption adds data to the **same** eSIM, with no reinstall. It works on any eSIM phone, on any
+carrier, next to the user's normal SIM. The app is in English, French (Mo/Go units), German, Italian and Spanish.
 
-**Problem:** in the US and France most people pay a monthly plan, and many have unlimited or very
-cheap data. A carrier top-up API like Reloadly can only add credit to **prepaid** lines, and it mostly
-sends airtime (call/text credit), not data packs. So carrier top-ups would reach only a small share of users.
+This also fits ad network rules better: the reward is credit for **your own in-app service**.
+Still get written confirmation from AdMob.
 
-**Recommended instead: a GigaBee eSIM.** Use an eSIM reseller API (for example Airalo Partners,
-eSIM Go or eSIM Access) to offer your own data plans inside the app. This works on any recent phone,
-on any carrier, in the US and all of Europe. Users install the GigaBee eSIM once and then:
-- **earn** data on it by watching ads (the current points system, unchanged), and
-- **buy** extra GB in the app (a second income on top of ads).
+**Setup:**
+1. Create an eSIM Go account, add funds, and create an **API key**.
+2. In their catalogue, pick the bundles you want (for example a 1 GB and 3 GB plan for the USA and for Europe)
+   and note their exact names and your price.
+3. Add them to the database, with `country_code = 'ESIM'` so everyone sees them, and `carrier` as the region name:
+   ```sql
+   insert into bundles (country_code, carrier, label, data_kb, provider_item, cost_usd, sort) values
+     ('ESIM', 'USA',    '1 GB', 1048576, '<exact eSIM Go bundle name>', <your cost>, 1),
+     ('ESIM', 'Europe', '1 GB', 1048576, '<exact eSIM Go bundle name>', <your cost>, 1);
+   ```
+4. Put your real cost per GB in `country_config` so the reward per ad stays profitable:
+   ```sql
+   insert into country_config values ('US', <your eCPM>, <cost per GB>, 0.35, 25, now()),
+                                     ('FR', <your eCPM>, <cost per GB>, 0.35, 25, now());
+   ```
+5. Set the secrets and deploy:
+   ```bash
+   supabase secrets set ESIMGO_API_KEY=... ESIMGO_MODE=validate
+   ```
+   ```bash
+   supabase functions deploy redeem
+   ```
+   `validate` checks orders with eSIM Go without paying or sending anything, and refunds the MB.
+   When it works, switch to `ESIMGO_MODE=transaction` for real orders.
 
-This also helps with ad network rules: the reward becomes credit for **your own in-app service**,
-the same model carriers use for "watch ads, get data". AdMob allows rewards that are only usable
-inside the publisher's own app or service. Still get written confirmation from your ad network.
-
-Example economics, using the same formula and a 35% margin. These are examples, not real quotes:
-put your real AdMob eCPM and your eSIM supplier's price per GB into `country_config`.
+Example economics (35% margin, example numbers only, use your own):
 
 | Market | Example eCPM | Example cost per GB | MB per ad | Ads per 1 GB | You earn per GB |
 |---|---|---|---|---|---|
@@ -135,7 +150,7 @@ In debug builds, **long-press the ring** to add 100 MB so you can test redeeming
    ```bash
    supabase secrets set RELOADLY_CLIENT_ID=... RELOADLY_CLIENT_SECRET=... RELOADLY_SANDBOX=true ADMOB_REWARDED_AD_UNIT=<numeric id after the slash>
    ```
-3. **Reloadly** (or another top-up provider): find the operator IDs and data bundle amounts for your
+3. **(Old carrier top-up path, replaced by the eSIM; see above.)** Reloadly: find the operator IDs and data bundle amounts for your
    country, then add them. 1 GB = 1048576 KB:
    ```sql
    insert into country_config values ('MX', 4.0, 0.80, 0.35, 25, now());
@@ -158,7 +173,7 @@ app/                       Android app (Kotlin, Jetpack Compose)
 backend/supabase/
   migrations/              tables, RLS, credit/redeem functions, profit view
   functions/admob-ssv      verifies Google's signature, credits MB
-  functions/redeem         sends the bundle via Reloadly, refunds on failure
+  functions/redeem         creates / tops up the user's eSIM via eSIM Go, refunds on failure
 .github/workflows/         builds the APK in the cloud
 ```
 

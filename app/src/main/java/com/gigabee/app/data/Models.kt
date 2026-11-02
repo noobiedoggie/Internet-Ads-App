@@ -11,12 +11,18 @@ data class DataBundle(
     val dataKb: Long,
 )
 
+/** The user's GigaBee eSIM. [lpa] is what QR codes and "enter code manually" use. */
+data class EsimInfo(val iccid: String, val smdp: String, val code: String) {
+    val lpa get() = "LPA:1$$smdp$$code"
+}
+
 data class AppState(
     val balanceKb: Long,
     val adsToday: Int,
     val dailyCap: Int,
     val kbPerAd: Long,
     val bundles: List<DataBundle>,
+    val esim: EsimInfo? = null,
 ) {
     val capReached get() = adsToday >= dailyCap
     private val sizes get() = bundles.map { it.dataKb }.distinct().sorted()
