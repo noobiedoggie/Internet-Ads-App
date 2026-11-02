@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tab_earn">Ganar</string>
+    <string name="tab_redeem">Canjear</string>
+    <string name="tab_activity">Actividad</string>
+
+    <string name="watch_ad">Ver anuncio</string>
+    <string name="loading_ad">Cargando anuncio…</string>
+    <string name="cap_reached">Vuelve mañana</string>
+    <string name="ads_today">%1$d/%2$d hoy</string>
+    <string name="of_goal">de %1$s</string>
+    <string name="helper_earn">Mira anuncios cortos, junta megas y mándalos a tu celular.</string>
+    <string name="helper_cap">Llegaste al límite de hoy. Hay anuncios nuevos a medianoche (UTC).</string>
+    <string name="helper_ready">¡Ya tienes suficiente para %1$s!</string>
+    <string name="redeem_now">Canjear ahora</string>
+    <string name="reward_added">+%1$s agregados</string>
+    <string name="no_reward">Mira el anuncio completo para ganar.</string>
+    <string name="verifying">Verificando tu recompensa…</string>
+    <string name="debug_bonus">Debug: +100 MB</string>
+
+    <string name="balance">Saldo: %1$s</string>
+    <string name="carrier">Compañía</string>
+    <string name="phone">Número de celular</string>
+    <string name="choose_bundle">Elige un paquete</string>
+    <string name="need_more">Te faltan %1$s</string>
+    <string name="send_bundle">Enviar %1$s</string>
+    <string name="confirm_title">¿Enviar %1$s?</string>
+    <string name="confirm_body">Se enviarán %1$s de datos al %2$s (%3$s). Revisa bien el número: no se puede deshacer.</string>
+    <string name="confirm">Enviar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="demo_note">Modo demo: no se envían datos reales.</string>
+    <string name="no_bundles">Todavía no hay canjes en tu país. Sigue ganando, tus megas se guardan.</string>
+    <string name="redeem_ok">¡En camino! Tus datos suelen llegar en pocos minutos.</string>
+
+    <string name="activity_empty">Mira tu primer anuncio para empezar a ganar.</string>
+    <string name="kind_ad">Anuncio visto</string>
+    <string name="kind_redeem">Datos enviados</string>
+    <string name="kind_refund">Reembolso</string>
+    <string name="kind_bonus">Bono</string>
+    <string name="status_pending">Pendiente</string>
+    <string name="status_failed">Falló, reembolsado</string>
+
+    <string name="error_generic">Algo salió mal. Revisa tu conexión.</string>
+    <string name="retry">Reintentar</string>
+</resources>

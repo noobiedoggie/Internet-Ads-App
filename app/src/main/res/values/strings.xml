@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GigaBee</string>
+
+    <string name="tab_earn">Earn</string>
+    <string name="tab_redeem">Redeem</string>
+    <string name="tab_activity">Activity</string>
+
+    <string name="watch_ad">Watch ad</string>
+    <string name="loading_ad">Loading ad…</string>
+    <string name="cap_reached">Come back tomorrow</string>
+    <string name="ads_today">%1$d/%2$d today</string>
+    <string name="of_goal">of %1$s</string>
+    <string name="helper_earn">Watch short ads, collect megabytes, send them to your phone.</string>
+    <string name="helper_cap">You hit today\'s limit. New ads unlock at midnight (UTC).</string>
+    <string name="helper_ready">You have enough for %1$s!</string>
+    <string name="redeem_now">Redeem now</string>
+    <string name="reward_added">+%1$s added</string>
+    <string name="no_reward">Watch the whole ad to earn.</string>
+    <string name="verifying">Verifying your reward…</string>
+    <string name="debug_bonus">Debug: +100 MB</string>
+
+    <string name="balance">Balance: %1$s</string>
+    <string name="carrier">Carrier</string>
+    <string name="phone">Phone number</string>
+    <string name="choose_bundle">Choose a bundle</string>
+    <string name="need_more">%1$s to go</string>
+    <string name="send_bundle">Send %1$s</string>
+    <string name="confirm_title">Send %1$s?</string>
+    <string name="confirm_body">%1$s of data will go to %2$s on %3$s. Double-check the number: this can\'t be undone.</string>
+    <string name="confirm">Send</string>
+    <string name="cancel">Cancel</string>
+    <string name="demo_note">Demo mode: no real data is sent.</string>
+    <string name="no_bundles">Redemptions aren\'t available in your country yet. Keep earning, your MB are saved.</string>
+    <string name="redeem_ok">On its way! Your data usually arrives within a few minutes.</string>
+
+    <string name="activity_empty">Watch your first ad to start earning.</string>
+    <string name="kind_ad">Ad watched</string>
+    <string name="kind_redeem">Data sent</string>
+    <string name="kind_refund">Refund</string>
+    <string name="kind_bonus">Bonus</string>
+    <string name="status_pending">Pending</string>
+    <string name="status_failed">Failed, refunded</string>
+
+    <string name="error_generic">Something went wrong. Check your connection.</string>
+    <string name="retry">Retry</string>
+</resources>

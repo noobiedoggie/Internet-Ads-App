@@ -1,0 +1,11 @@
+project_id = "gigabee"
+
+[auth]
+enable_anonymous_sign_ins = true
+
+# AdMob calls this without a Supabase token; it is protected by Google's signature instead.
+[functions.admob-ssv]
+verify_jwt = false
+
+[functions.redeem]
+verify_jwt = true
