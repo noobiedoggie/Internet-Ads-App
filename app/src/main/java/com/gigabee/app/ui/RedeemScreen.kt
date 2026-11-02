@@ -56,8 +56,8 @@ import com.gigabee.app.R
 import com.gigabee.app.data.DataBundle
 import com.gigabee.app.data.EsimInfo
 import com.gigabee.app.data.ShopItem
+import com.gigabee.app.data.dataParts
 import com.gigabee.app.data.formatData
-import com.gigabee.app.data.formatHoney
 import com.gigabee.app.ui.theme.Bee
 
 @Composable
@@ -75,18 +75,28 @@ fun RedeemScreen(ui: UiState, onRedeem: (DataBundle) -> Unit, onBuy: (Long) -> U
     Column(
         Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 24.dp, vertical = 16.dp),
     ) {
-        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                stringResource(R.string.tab_redeem),
-                color = Bee.Text,
-                fontSize = 30.sp,
-                fontWeight = FontWeight.Black,
-                modifier = Modifier.weight(1f),
-            )
-            Pill("🍯 " + formatHoney(s.honey), selected = true)
-        }
-        Text(stringResource(R.string.co_total, formatData(s.balanceKb)), color = Bee.Muted, fontSize = 15.sp)
+        ScreenHeader(stringResource(R.string.tab_redeem), trailing = { HoneyChip(s.honey) })
         Spacer(Modifier.height(20.dp))
+
+        // Total co, the number that will turn into real internet.
+        BeeCard {
+            SectionLabel(stringResource(R.string.co_label))
+            val (number, unit) = dataParts(s.balanceKb)
+            Row(verticalAlignment = Alignment.Bottom) {
+                Text(number, color = Bee.Text, fontSize = 46.sp, fontWeight = FontWeight.Bold, letterSpacing = (-1.5).sp)
+                Spacer(Modifier.width(6.dp))
+                Text(unit, color = Bee.Yellow, fontSize = 18.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(bottom = 9.dp))
+            }
+            Spacer(Modifier.height(6.dp))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.Rounded.Lock, contentDescription = null, tint = Bee.Yellow, modifier = Modifier.size(15.dp))
+                Spacer(Modifier.width(6.dp))
+                Text(stringResource(R.string.vault_soon), color = Bee.Yellow, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
+            }
+            Spacer(Modifier.height(4.dp))
+            Text(stringResource(R.string.vault_body), color = Bee.Muted, fontSize = 13.sp)
+        }
+        Spacer(Modifier.height(26.dp))
 
         // Honey -> co swap.
         SectionLabel(stringResource(R.string.shop_title))
@@ -95,12 +105,12 @@ fun RedeemScreen(ui: UiState, onRedeem: (DataBundle) -> Unit, onBuy: (Long) -> U
                 ShopTile(item, affordable = s.honey >= item.cost, modifier = Modifier.weight(1f)) { onBuy(item.kb) }
             }
         }
-        Spacer(Modifier.height(24.dp))
+        Spacer(Modifier.height(26.dp))
 
         // The user's co cards.
         SectionLabel(stringResource(R.string.cards_title))
         if (s.cards.isEmpty()) {
-            Text(stringResource(R.string.cards_empty), color = Bee.Muted, fontSize = 14.sp)
+            BeeCard { Text(stringResource(R.string.cards_empty), color = Bee.Muted, fontSize = 14.sp) }
         } else {
             s.cards.chunked(2).forEach { row ->
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -110,13 +120,10 @@ fun RedeemScreen(ui: UiState, onRedeem: (DataBundle) -> Unit, onBuy: (Long) -> U
                 Spacer(Modifier.height(12.dp))
             }
         }
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(12.dp))
 
         // Redemptions not open yet: cards wait in the vault.
-        if (s.bundles.isEmpty()) {
-            VaultCard()
-            return@Column
-        }
+        if (s.bundles.isEmpty()) return@Column
 
         EsimCard(s.esim, ui.isDemo)
         Spacer(Modifier.height(24.dp))
@@ -186,55 +193,24 @@ fun RedeemScreen(ui: UiState, onRedeem: (DataBundle) -> Unit, onBuy: (Long) -> U
 }
 
 @Composable
-private fun VaultCard() {
-    val shape = RoundedCornerShape(24.dp)
-    Column(
-        Modifier
-            .fillMaxWidth()
-            .clip(shape)
-            .background(Bee.Surface)
-            .border(1.5.dp, Bee.Yellow, shape)
-            .padding(20.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Box(
-            Modifier.size(56.dp).clip(RoundedCornerShape(18.dp)).background(Bee.Yellow),
-            contentAlignment = Alignment.Center,
-        ) {
-            Icon(Icons.Rounded.Lock, contentDescription = null, tint = Bee.Black, modifier = Modifier.size(30.dp))
-        }
-        Spacer(Modifier.height(12.dp))
-        Text(
-            stringResource(R.string.vault_soon),
-            color = Bee.Black,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.ExtraBold,
-            modifier = Modifier.clip(RoundedCornerShape(50)).background(Bee.Yellow).padding(horizontal = 16.dp, vertical = 8.dp),
-        )
-        Spacer(Modifier.height(10.dp))
-        Text(stringResource(R.string.vault_body), color = Bee.Muted, fontSize = 14.sp, textAlign = TextAlign.Center)
-    }
-}
-
-@Composable
 private fun ShopTile(item: ShopItem, affordable: Boolean, modifier: Modifier = Modifier, onClick: () -> Unit) {
-    val shape = RoundedCornerShape(18.dp)
+    val shape = RoundedCornerShape(20.dp)
     Column(
         modifier
             .clip(shape)
-            .background(if (affordable) Bee.Yellow else Bee.Surface)
-            .border(1.dp, if (affordable) Bee.Yellow else Bee.Line, shape)
+            .background(Bee.Surface)
+            .border(1.dp, if (affordable) Bee.Yellow.copy(alpha = 0.6f) else Bee.Line, shape)
             .clickable(enabled = affordable, onClick = onClick)
-            .padding(vertical = 14.dp),
+            .padding(vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(formatData(item.kb), color = if (affordable) Bee.Black else Bee.Text, fontSize = 18.sp, fontWeight = FontWeight.Black)
-        Spacer(Modifier.height(2.dp))
-        Text(
-            formatHoney(item.cost) + " 🍯",
-            color = if (affordable) Bee.Black.copy(alpha = 0.75f) else Bee.Muted,
+        Text(formatData(item.kb), color = if (affordable) Bee.Text else Bee.Muted, fontSize = 19.sp, fontWeight = FontWeight.Bold)
+        Spacer(Modifier.height(6.dp))
+        HoneyAmount(
+            item.cost,
             fontSize = 13.sp,
-            fontWeight = FontWeight.Bold,
+            color = if (affordable) Bee.Yellow else Bee.Muted,
+            dropColor = if (affordable) Bee.Yellow else Bee.Muted,
         )
     }
 }
@@ -355,7 +331,6 @@ private fun BundleCard(b: DataBundle, balanceKb: Long, selected: Boolean, onClic
                     stroke = 4.dp,
                     track = if (selected) Bee.Black.copy(alpha = 0.2f) else Bee.Surface2,
                     color = if (selected) Bee.Black else Bee.Yellow,
-                    glow = false,
                 )
             }
         }

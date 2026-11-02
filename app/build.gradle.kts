@@ -76,6 +76,14 @@ android {
         compose = true
         buildConfig = true
     }
+
+    // Screenshot tests (Robolectric + Roborazzi) render every screen to PNG on the build server.
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+            all { it.systemProperty("roborazzi.test.record", "true") }
+        }
+    }
 }
 
 kotlin {
@@ -106,5 +114,14 @@ dependencies {
     implementation("com.google.android.ump:user-messaging-platform:3.1.0")
     implementation("com.google.zxing:core:3.5.3") // QR code for the eSIM install
     implementation("androidx.work:work-runtime-ktx:2.10.0") // daily reminder
-    implementation("androidx.fragment:fragment-ktx:1.8.5") // play-services-ads pulls an old Fragment; permission request needs >= 1.3
+    implementation("androidx.fragment:fragment-ktx:1.8.5")
+
+    testImplementation(composeBom)
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.robolectric:robolectric:4.15.1")
+    testImplementation("androidx.test.ext:junit:1.2.1")
+    testImplementation("androidx.compose.ui:ui-test-junit4")
+    testImplementation("io.github.takahirom.roborazzi:roborazzi:1.56.0")
+    testImplementation("io.github.takahirom.roborazzi:roborazzi-compose:1.56.0")
+    debugImplementation("androidx.compose.ui:ui-test-manifest") // play-services-ads pulls an old Fragment; permission request needs >= 1.3
 }

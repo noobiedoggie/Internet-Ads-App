@@ -3,6 +3,7 @@ package com.gigabee.app.ui
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -19,14 +20,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.PlayArrow
+import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material.icons.rounded.Star
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -35,7 +31,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -57,14 +55,18 @@ fun HomeScreen(
     onSurveys: (() -> Unit)? = null,
 ) {
     val s = ui.state ?: return
-    // The ring fills up toward the next wheel spin.
+    val haptics = LocalHapticFeedback.current
+
+    // The ring fills up toward the next wheel spin; the number counts up smoothly.
     val target = if (s.spinCost > 0) (s.honey.toFloat() / s.spinCost).coerceIn(0f, 1f) else 0f
     val progress by animateFloatAsState(target, tween(900, easing = FastOutSlowInEasing), label = "ring")
+    val shownHoney by animateIntAsState(s.honey.toInt(), tween(900, easing = FastOutSlowInEasing), label = "honey")
 
-    // "+23 🍯" floats up and the ring pulses each time a reward lands.
+    // "+22" floats up, the ring pulses and the phone ticks each time a reward lands.
     val pop = remember { Animatable(0f) }
     LaunchedEffect(ui.rewardEvent) {
         if (ui.rewardEvent > 0) {
+            haptics.performHapticFeedback(HapticFeedbackType.LongPress)
             pop.snapTo(0f)
             pop.animateTo(1f, tween(1400))
         }
@@ -76,18 +78,19 @@ fun HomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            BeeMark(side = 28.dp)
+            BeeMark(side = 26.dp)
             Spacer(Modifier.width(10.dp))
-            Text("GigaBee", color = Bee.Text, fontSize = 22.sp, fontWeight = FontWeight.Black)
+            Text("GigaBee", color = Bee.Text, fontSize = 21.sp, fontWeight = FontWeight.Bold, letterSpacing = (-0.3).sp)
             Spacer(Modifier.weight(1f))
-            Pill(stringResource(R.string.ads_today, s.adsToday, s.dailyCap))
+            HoneyChip(s.honey)
         }
 
         Spacer(Modifier.height(14.dp))
-        if (s.streak > 0) {
-            Pill(stringResource(R.string.streak_label, s.streak) + " · " + stringResource(R.string.streak_bonus, s.streakBonusPct), selected = true)
-        } else {
-            Text(stringResource(R.string.streak_hint, 20), color = Bee.Muted, fontSize = 13.sp, textAlign = TextAlign.Center)
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            if (s.streak > 0) {
+                Pill(stringResource(R.string.streak_label, s.streak) + "  ·  " + stringResource(R.string.streak_bonus, s.streakBonusPct), selected = true)
+            }
+            Pill(stringResource(R.string.ads_today, s.adsToday, s.dailyCap))
         }
 
         Spacer(Modifier.weight(1f))
@@ -95,9 +98,9 @@ fun HomeScreen(
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
-                .size(276.dp)
+                .size(268.dp)
                 .graphicsLayer {
-                    val k = 1f + 0.04f * sin(PI * p).toFloat()
+                    val k = 1f + 0.035f * sin(PI * p).toFloat()
                     scaleX = k
                     scaleY = k
                 }
@@ -111,83 +114,71 @@ fun HomeScreen(
         ) {
             ProgressRing(progress, Modifier.fillMaxSize())
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("🍯", fontSize = 26.sp)
-                Text(formatHoney(s.honey), color = Bee.Text, fontSize = 60.sp, fontWeight = FontWeight.Black, letterSpacing = (-2).sp)
-                Text(stringResource(R.string.honey_unit), color = Bee.Yellow, fontSize = 16.sp, fontWeight = FontWeight.Bold)
-                Spacer(Modifier.height(4.dp))
+                HoneyDrop(size = 24.dp)
+                Spacer(Modifier.height(6.dp))
+                Text(
+                    formatHoney(shownHoney.toLong()),
+                    color = Bee.Text,
+                    fontSize = 62.sp,
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = (-2).sp,
+                )
+                Text(stringResource(R.string.honey_unit), color = Bee.Muted, fontSize = 14.sp, fontWeight = FontWeight.Medium)
+                Spacer(Modifier.height(10.dp))
                 Text(
                     if (s.canSpin) stringResource(R.string.spin_ready)
                     else stringResource(R.string.of_spin, formatHoney(s.spinCost)),
                     color = if (s.canSpin) Bee.Yellow else Bee.Muted,
-                    fontSize = 14.sp,
-                    fontWeight = if (s.canSpin) FontWeight.Bold else FontWeight.Normal,
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.SemiBold,
                 )
             }
             if (p > 0f && p < 1f && ui.rewardHoney > 0) {
-                Text(
-                    "+" + formatHoney(ui.rewardHoney) + " 🍯",
-                    color = Bee.Yellow,
+                HoneyAmount(
+                    ui.rewardHoney,
+                    prefix = "+",
                     fontSize = 22.sp,
-                    fontWeight = FontWeight.ExtraBold,
-                    modifier = Modifier.align(Alignment.TopCenter).offset(y = (44 - 56 * p).dp).alpha(1f - p),
+                    color = Bee.Yellow,
+                    modifier = Modifier.align(Alignment.TopCenter).offset(y = (40 - 56 * p).dp).alpha(1f - p),
                 )
             }
         }
 
         Spacer(Modifier.weight(1f))
 
-        val label = when {
-            s.capReached -> stringResource(R.string.cap_reached)
-            ui.verifying -> stringResource(R.string.verifying)
-            !ui.adReady -> stringResource(R.string.loading_ad)
-            else -> stringResource(R.string.watch_ad) + "  +" + formatHoney(s.honeyPerAd) + " 🍯"
-        }
+        val ready = !s.capReached && ui.adReady && !ui.busy
         BeeButton(
-            text = label,
+            text = when {
+                s.capReached -> stringResource(R.string.cap_reached)
+                ui.verifying -> stringResource(R.string.verifying)
+                !ui.adReady -> stringResource(R.string.loading_ad)
+                else -> stringResource(R.string.watch_ad)
+            },
             onClick = onWatch,
-            enabled = !s.capReached && ui.adReady && !ui.busy,
+            enabled = ready,
             icon = Icons.Rounded.PlayArrow,
             loading = !s.capReached && (ui.verifying || (!ui.adReady && !ui.busy)),
+            trailing = if (ready) {
+                { HoneyAmount(s.honeyPerAd, prefix = "+", fontSize = 17.sp, color = Bee.Black, dropColor = Bee.Black) }
+            } else {
+                null
+            },
         )
 
-        if (onSurveys != null) {
-            Spacer(Modifier.height(12.dp))
-            OutlinedButton(
-                onClick = onSurveys,
-                modifier = Modifier.fillMaxWidth().height(52.dp),
-                shape = RoundedCornerShape(26.dp),
-                border = BorderStroke(1.5.dp, Bee.Yellow),
-                colors = ButtonDefaults.outlinedButtonColors(contentColor = Bee.Yellow),
-            ) {
-                Icon(Icons.Rounded.Star, contentDescription = null, modifier = Modifier.size(20.dp))
-                Spacer(Modifier.width(8.dp))
-                Text(stringResource(R.string.surveys), fontSize = 16.sp, fontWeight = FontWeight.Bold)
-            }
-        }
-
-        Column(
-            Modifier.fillMaxWidth().height(64.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-        ) {
-            if (s.canSpin) {
-                TextButton(onClick = onOpenWheel) {
-                    Text(
-                        stringResource(R.string.go_spin),
-                        color = Bee.Yellow,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center,
-                    )
-                }
-            } else {
+        Spacer(Modifier.height(12.dp))
+        when {
+            s.canSpin -> GhostButton(stringResource(R.string.go_spin), onClick = onOpenWheel, icon = Icons.Rounded.Refresh)
+            onSurveys != null -> GhostButton(stringResource(R.string.surveys), onClick = onSurveys, icon = Icons.Rounded.Star)
+            else -> Box(Modifier.height(52.dp).fillMaxWidth(), contentAlignment = Alignment.Center) {
                 Text(
                     stringResource(
                         when {
                             s.capReached -> R.string.helper_cap
                             s.streak > 0 && s.adsToday == 0 -> R.string.streak_keep
+                            s.streak == 0 -> R.string.streak_hint
                             else -> R.string.helper_honey
                         },
-                        s.streak,
+                        if (s.streak == 0) 20 else s.streak,
                     ),
                     color = Bee.Muted,
                     fontSize = 13.sp,

@@ -123,4 +123,8 @@
     <string name="not_enough_honey">Aún no tienes suficiente miel</string>
     <string name="kind_buy">Miel → datos</string>
     <string name="card_label">Tarjeta de %1$s</string>
+
+    <string name="spin_action">Girar</string>
+    <string name="need_honey">Necesitas</string>
+    <string name="co_label">Tus datos</string>
 </resources>

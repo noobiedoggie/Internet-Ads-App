@@ -3,7 +3,9 @@ package com.gigabee.app.ui
 import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -12,9 +14,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -36,7 +40,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
@@ -58,16 +61,19 @@ fun TopScreen(ui: UiState, onLoad: () -> Unit, onReroll: () -> Unit, onApplyCode
     LazyColumn(
         Modifier.fillMaxSize(),
         contentPadding = PaddingValues(horizontal = 24.dp, vertical = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         item {
-            Text(stringResource(R.string.top_title), color = Bee.Text, fontSize = 30.sp, fontWeight = FontWeight.Black)
-            Text(stringResource(R.string.top_reset), color = Bee.Muted, fontSize = 14.sp)
-            Spacer(Modifier.height(10.dp))
+            ScreenHeader(stringResource(R.string.top_title), subtitle = stringResource(R.string.top_reset))
+            Spacer(Modifier.height(12.dp))
         }
         item { MeCard(s, lb?.myRank, lb?.myScore ?: 0L, onReroll) }
-        item { InviteCard(s, onApplyCode) }
-        item { Spacer(Modifier.height(6.dp)) }
+        item {
+            Spacer(Modifier.height(4.dp))
+            InviteCard(s, onApplyCode)
+            Spacer(Modifier.height(18.dp))
+            SectionLabel(stringResource(R.string.top_title))
+        }
         if (lb == null || lb.top.isEmpty()) {
             item { Text(stringResource(R.string.top_unranked), color = Bee.Muted, fontSize = 14.sp) }
         } else {
@@ -76,34 +82,39 @@ fun TopScreen(ui: UiState, onLoad: () -> Unit, onReroll: () -> Unit, onApplyCode
     }
 }
 
-private val cardShape = RoundedCornerShape(24.dp)
-
 @Composable
 private fun MeCard(s: AppState, myRank: Int?, myScore: Long, onReroll: () -> Unit) {
-    Column(
-        Modifier.fillMaxWidth().clip(cardShape).background(Bee.Surface).border(1.dp, Bee.Line, cardShape).padding(20.dp),
-    ) {
+    BeeCard {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            BeeMark(side = 34.dp)
-            Spacer(Modifier.width(12.dp))
+            BeeMark(side = 36.dp)
+            Spacer(Modifier.width(14.dp))
             Column(Modifier.weight(1f)) {
-                Text(s.nickname ?: "…", color = Bee.Text, fontSize = 20.sp, fontWeight = FontWeight.Black)
-                Text(
-                    if (myRank != null) stringResource(R.string.top_you, myRank) + " · " + formatHoney(myScore) + " 🍯"
-                    else stringResource(R.string.top_unranked),
-                    color = Bee.Muted,
-                    fontSize = 13.sp,
-                )
+                Text(s.nickname ?: "…", color = Bee.Text, fontSize = 19.sp, fontWeight = FontWeight.Bold)
+                Spacer(Modifier.height(2.dp))
+                if (myRank != null) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(stringResource(R.string.top_you, myRank) + "  ·  ", color = Bee.Muted, fontSize = 13.sp)
+                        HoneyAmount(myScore, fontSize = 13.sp, color = Bee.Yellow)
+                    }
+                } else {
+                    Text(stringResource(R.string.top_unranked), color = Bee.Muted, fontSize = 13.sp)
+                }
             }
-            TextButton(onClick = onReroll) {
-                Icon(Icons.Rounded.Refresh, contentDescription = null, tint = Bee.Yellow)
-                Spacer(Modifier.width(4.dp))
-                Text(stringResource(R.string.reroll), color = Bee.Yellow, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+            // Round "new name" button.
+            Box(
+                Modifier
+                    .size(40.dp)
+                    .clip(CircleShape)
+                    .background(Bee.Surface2)
+                    .clickable(onClick = onReroll),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(Icons.Rounded.Refresh, contentDescription = stringResource(R.string.reroll), tint = Bee.Yellow, modifier = Modifier.size(20.dp))
             }
         }
         if (s.streak > 0) {
-            Spacer(Modifier.height(12.dp))
-            Pill(stringResource(R.string.streak_label, s.streak) + " · " + stringResource(R.string.streak_bonus, s.streakBonusPct))
+            Spacer(Modifier.height(14.dp))
+            Pill(stringResource(R.string.streak_label, s.streak) + "  ·  " + stringResource(R.string.streak_bonus, s.streakBonusPct), selected = true)
         }
     }
 }
@@ -112,25 +123,24 @@ private fun MeCard(s: AppState, myRank: Int?, myScore: Long, onReroll: () -> Uni
 private fun InviteCard(s: AppState, onApplyCode: (String) -> Unit) {
     val context = LocalContext.current
     var code by rememberSaveable { mutableStateOf("") }
-    Column(
-        Modifier.fillMaxWidth().clip(cardShape).background(Bee.Surface).border(1.5.dp, Bee.Yellow, cardShape).padding(20.dp),
-    ) {
-        Text(stringResource(R.string.invite_title), color = Bee.Text, fontSize = 18.sp, fontWeight = FontWeight.Black)
+    BeeCard(highlight = true) {
+        Text(stringResource(R.string.invite_title), color = Bee.Text, fontSize = 18.sp, fontWeight = FontWeight.Bold)
         Spacer(Modifier.height(6.dp))
-        Text(stringResource(R.string.invite_body, formatHoney(s.referralHoney) + " 🍯", s.referralTarget), color = Bee.Muted, fontSize = 14.sp)
+        Text(stringResource(R.string.invite_body, formatHoney(s.referralHoney) + " " + stringResource(R.string.honey_unit), s.referralTarget), color = Bee.Muted, fontSize = 14.sp)
 
         val myCode = s.referralCode
         if (myCode != null) {
-            Spacer(Modifier.height(14.dp))
-            Text(
-                myCode,
-                color = Bee.Yellow,
-                fontSize = 30.sp,
-                fontWeight = FontWeight.Black,
-                fontFamily = FontFamily.Monospace,
-                letterSpacing = 4.sp,
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-            )
+            Spacer(Modifier.height(16.dp))
+            Box(
+                Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(Bee.Surface2)
+                    .padding(vertical = 14.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(myCode, color = Bee.Yellow, fontSize = 28.sp, fontWeight = FontWeight.Bold, letterSpacing = 8.sp)
+            }
             Spacer(Modifier.height(12.dp))
             val message = stringResource(R.string.invite_message, myCode, SHARE_URL)
             val title = stringResource(R.string.invite_share)
@@ -143,7 +153,7 @@ private fun InviteCard(s: AppState, onApplyCode: (String) -> Unit) {
         when {
             s.referred && s.referralPaid -> {
                 Spacer(Modifier.height(12.dp))
-                Text(stringResource(R.string.invite_done), color = Bee.Yellow, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.invite_done), color = Bee.Yellow, fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
             }
             s.referred -> {
                 Spacer(Modifier.height(12.dp))
@@ -151,13 +161,13 @@ private fun InviteCard(s: AppState, onApplyCode: (String) -> Unit) {
                     stringResource(R.string.invite_progress, minOf(s.lifetimeAds, s.referralTarget), s.referralTarget),
                     color = Bee.Text,
                     fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = FontWeight.SemiBold,
                 )
             }
             s.canEnterReferral -> {
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(18.dp))
                 Text(stringResource(R.string.invite_have_code), color = Bee.Muted, fontSize = 13.sp)
-                Spacer(Modifier.height(6.dp))
+                Spacer(Modifier.height(8.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     OutlinedTextField(
                         value = code,
@@ -179,7 +189,7 @@ private fun InviteCard(s: AppState, onApplyCode: (String) -> Unit) {
                     )
                     Spacer(Modifier.width(8.dp))
                     TextButton(onClick = { onApplyCode(code); code = "" }, enabled = code.length >= 4) {
-                        Text(stringResource(R.string.invite_apply), color = Bee.Yellow, fontWeight = FontWeight.Bold)
+                        Text(stringResource(R.string.invite_apply), color = if (code.length >= 4) Bee.Yellow else Bee.Muted, fontWeight = FontWeight.Bold)
                     }
                 }
             }
@@ -189,24 +199,36 @@ private fun InviteCard(s: AppState, onApplyCode: (String) -> Unit) {
 
 @Composable
 private fun RankRow(e: LeaderboardEntry) {
-    val shape = RoundedCornerShape(16.dp)
+    val shape = RoundedCornerShape(18.dp)
+    val podium = e.rank <= 3
     Row(
         Modifier
             .fillMaxWidth()
             .clip(shape)
-            .background(if (e.me) Bee.Yellow else Bee.Surface)
-            .padding(horizontal = 16.dp, vertical = 14.dp),
+            .background(if (e.me) Bee.YellowSoft else Bee.Surface)
+            .border(1.dp, if (e.me) Bee.Yellow.copy(alpha = 0.6f) else Bee.Line, shape)
+            .padding(horizontal = 14.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        val fg = if (e.me) Bee.Black else Bee.Text
+        Box(
+            Modifier.size(32.dp).clip(CircleShape).background(if (podium) Bee.Yellow else Bee.Surface2),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(
+                e.rank.toString(),
+                color = if (podium) Bee.Black else Bee.Muted,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+            )
+        }
+        Spacer(Modifier.width(14.dp))
         Text(
-            when (e.rank) { 1 -> "🥇"; 2 -> "🥈"; 3 -> "🥉"; else -> "#${e.rank}" },
-            color = fg,
-            fontSize = if (e.rank <= 3) 22.sp else 15.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.width(44.dp),
+            e.nickname,
+            color = Bee.Text,
+            fontSize = 15.sp,
+            fontWeight = if (e.me) FontWeight.Bold else FontWeight.Medium,
+            modifier = Modifier.weight(1f),
         )
-        Text(e.nickname, color = fg, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f))
-        Text(formatHoney(e.score) + " 🍯", color = if (e.me) Bee.Black else Bee.Yellow, fontSize = 15.sp, fontWeight = FontWeight.Black)
+        HoneyAmount(e.score, fontSize = 15.sp, color = if (e.me) Bee.Yellow else Bee.Text)
     }
 }

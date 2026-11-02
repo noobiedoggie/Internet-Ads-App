@@ -125,4 +125,8 @@
     <string name="not_enough_honey">Not enough honey yet</string>
     <string name="kind_buy">Honey → data</string>
     <string name="card_label">%1$s card</string>
+
+    <string name="spin_action">Spin</string>
+    <string name="need_honey">You need</string>
+    <string name="co_label">Your data</string>
 </resources>

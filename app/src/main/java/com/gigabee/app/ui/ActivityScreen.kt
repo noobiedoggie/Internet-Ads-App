@@ -2,6 +2,9 @@ package com.gigabee.app.ui
 
 import android.text.format.DateUtils
 import androidx.compose.foundation.background
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -36,29 +39,30 @@ import com.gigabee.app.R
 import com.gigabee.app.ads.BannerAd
 import com.gigabee.app.data.LedgerEntry
 import com.gigabee.app.data.formatData
-import com.gigabee.app.data.formatHoney
 import com.gigabee.app.ui.theme.Bee
 import kotlin.math.abs
 
 @Composable
 fun ActivityScreen(ui: UiState) {
     Column(Modifier.fillMaxSize()) {
-        Text(
-            stringResource(R.string.tab_activity),
-            color = Bee.Text,
-            fontSize = 30.sp,
-            fontWeight = FontWeight.Black,
-            modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 16.dp, bottom = 8.dp),
-        )
+        Box(Modifier.padding(start = 24.dp, end = 24.dp, top = 16.dp, bottom = 12.dp)) {
+            ScreenHeader(stringResource(R.string.tab_activity))
+        }
         if (ui.history.isEmpty()) {
-            Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
-                Text(stringResource(R.string.activity_empty), color = Bee.Muted)
+            Column(
+                Modifier.weight(1f).fillMaxWidth().padding(32.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+            ) {
+                BeeMark(side = 44.dp)
+                Spacer(Modifier.height(16.dp))
+                Text(stringResource(R.string.activity_empty), color = Bee.Muted, fontSize = 14.sp, textAlign = TextAlign.Center)
             }
         } else {
-            LazyColumn(Modifier.weight(1f), contentPadding = PaddingValues(horizontal = 24.dp, vertical = 8.dp)) {
+            LazyColumn(Modifier.weight(1f), contentPadding = PaddingValues(horizontal = 24.dp, vertical = 4.dp)) {
                 items(ui.history, key = { it.id }) { entry ->
                     EntryRow(entry)
-                    HorizontalDivider(color = Bee.Line)
+                    HorizontalDivider(color = Bee.Line, modifier = Modifier.padding(start = 54.dp))
                 }
             }
         }
@@ -101,21 +105,35 @@ private fun EntryRow(e: LedgerEntry) {
 
     Row(Modifier.fillMaxWidth().padding(vertical = 14.dp), verticalAlignment = Alignment.CenterVertically) {
         Box(
-            Modifier.size(40.dp).clip(CircleShape).background(if (earn) Bee.Yellow else Bee.Surface2),
+            Modifier
+                .size(40.dp)
+                .clip(CircleShape)
+                .background(if (earn) Bee.YellowSoft else Bee.Surface2),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(icon, contentDescription = null, tint = if (earn) Bee.Black else Bee.Text, modifier = Modifier.size(20.dp))
+            Icon(icon, contentDescription = null, tint = if (earn) Bee.Yellow else Bee.Muted, modifier = Modifier.size(19.dp))
         }
         Spacer(Modifier.width(14.dp))
         Column(Modifier.weight(1f)) {
             Text(title, color = Bee.Text, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
-            Text(subtitle, color = Bee.Muted, fontSize = 12.sp)
+            Spacer(Modifier.height(2.dp))
+            Text(subtitle, color = Bee.Muted, fontSize = 12.sp, maxLines = 1)
         }
-        Text(
-            (if (earn) "+" else "−") +
-                if (e.currency == "honey") formatHoney(abs(e.amount)) + " 🍯" else formatData(abs(e.amount)),
-            color = if (earn) Bee.Yellow else Bee.Text,
-            fontWeight = FontWeight.Bold,
-        )
+        if (e.currency == "honey") {
+            HoneyAmount(
+                abs(e.amount),
+                prefix = if (earn) "+" else "−",
+                fontSize = 15.sp,
+                color = if (earn) Bee.Yellow else Bee.Text,
+                dropColor = if (earn) Bee.Yellow else Bee.Muted,
+            )
+        } else {
+            Text(
+                (if (earn) "+" else "−") + formatData(abs(e.amount)),
+                color = if (earn) Bee.Yellow else Bee.Text,
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Bold,
+            )
+        }
     }
 }

@@ -1,9 +1,15 @@
 package com.gigabee.app.ui
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,8 +21,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
@@ -29,8 +37,10 @@ import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.gigabee.app.data.formatHoney
 import com.gigabee.app.ui.theme.Bee
 import kotlin.math.cos
 import kotlin.math.sin
@@ -60,34 +70,66 @@ fun BeeMark(modifier: Modifier = Modifier, side: Dp = 28.dp) {
     }
 }
 
+/** A honey drop glyph (used instead of an emoji so it looks the same on every phone). */
+@Composable
+fun HoneyDrop(modifier: Modifier = Modifier, size: Dp = 16.dp, color: Color = Bee.Yellow) {
+    Canvas(modifier.size(width = size * 0.8f, height = size)) {
+        val w = this.size.width
+        val h = this.size.height
+        val drop = Path().apply {
+            moveTo(w * 0.5f, 0f)
+            cubicTo(w * 0.5f, 0f, w * 0.02f, h * 0.46f, w * 0.02f, h * 0.66f)
+            cubicTo(w * 0.02f, h * 0.88f, w * 0.24f, h, w * 0.5f, h)
+            cubicTo(w * 0.76f, h, w * 0.98f, h * 0.88f, w * 0.98f, h * 0.66f)
+            cubicTo(w * 0.98f, h * 0.46f, w * 0.5f, 0f, w * 0.5f, 0f)
+            close()
+        }
+        drawPath(drop, color)
+    }
+}
+
+/** "◆ 1 234": drop icon + amount. */
+@Composable
+fun HoneyAmount(
+    amount: Long,
+    modifier: Modifier = Modifier,
+    fontSize: TextUnit = 15.sp,
+    color: Color = Bee.Text,
+    dropColor: Color = Bee.Yellow,
+    prefix: String = "",
+    weight: FontWeight = FontWeight.Bold,
+) {
+    Row(modifier, verticalAlignment = Alignment.CenterVertically) {
+        if (prefix.isNotEmpty()) Text(prefix, color = color, fontSize = fontSize, fontWeight = weight)
+        HoneyDrop(size = (fontSize.value * 0.95f).dp, color = dropColor)
+        Spacer(Modifier.width((fontSize.value * 0.3f).dp))
+        Text(formatHoney(amount), color = color, fontSize = fontSize, fontWeight = weight)
+    }
+}
+
 @Composable
 fun ProgressRing(
     progress: Float,
     modifier: Modifier = Modifier,
-    stroke: Dp = 18.dp,
+    stroke: Dp = 12.dp,
     track: Color = Bee.Surface2,
     color: Color = Bee.Yellow,
-    glow: Boolean = true,
 ) {
     Canvas(modifier) {
         val sw = stroke.toPx()
-        val inset = if (glow) sw else sw / 2f
+        val inset = sw / 2f
         val arcSize = Size(this.size.width - inset * 2, this.size.height - inset * 2)
         val topLeft = Offset(inset, inset)
         drawArc(color = track, startAngle = -90f, sweepAngle = 360f, useCenter = false,
             topLeft = topLeft, size = arcSize, style = Stroke(width = sw))
         if (progress > 0f) {
-            val sweep = 360f * progress
-            if (glow) {
-                drawArc(color = color.copy(alpha = 0.14f), startAngle = -90f, sweepAngle = sweep, useCenter = false,
-                    topLeft = topLeft, size = arcSize, style = Stroke(width = sw * 2f, cap = StrokeCap.Round))
-            }
-            drawArc(color = color, startAngle = -90f, sweepAngle = sweep, useCenter = false,
+            drawArc(color = color, startAngle = -90f, sweepAngle = 360f * progress, useCenter = false,
                 topLeft = topLeft, size = arcSize, style = Stroke(width = sw, cap = StrokeCap.Round))
         }
     }
 }
 
+/** Primary action: yellow pill, black text. Optional [trailing] content (e.g. a honey amount). */
 @Composable
 fun BeeButton(
     text: String,
@@ -96,12 +138,13 @@ fun BeeButton(
     enabled: Boolean = true,
     icon: ImageVector? = null,
     loading: Boolean = false,
+    trailing: (@Composable RowScope.() -> Unit)? = null,
 ) {
     Button(
         onClick = onClick,
         enabled = enabled,
-        modifier = modifier.fillMaxWidth().height(64.dp),
-        shape = RoundedCornerShape(32.dp),
+        modifier = modifier.fillMaxWidth().height(60.dp),
+        shape = RoundedCornerShape(30.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = Bee.Yellow,
             contentColor = Bee.Black,
@@ -110,35 +153,119 @@ fun BeeButton(
         ),
     ) {
         if (loading) {
-            CircularProgressIndicator(Modifier.size(20.dp), color = Bee.Muted, strokeWidth = 2.dp)
+            CircularProgressIndicator(Modifier.size(18.dp), color = Bee.Muted, strokeWidth = 2.dp)
             Spacer(Modifier.width(12.dp))
         } else if (icon != null) {
-            Icon(icon, contentDescription = null, modifier = Modifier.size(26.dp))
+            Icon(icon, contentDescription = null, modifier = Modifier.size(24.dp))
             Spacer(Modifier.width(8.dp))
         }
-        Text(text, fontSize = 18.sp, fontWeight = FontWeight.ExtraBold)
+        Text(text, fontSize = 17.sp, fontWeight = FontWeight.Bold)
+        if (trailing != null) {
+            Spacer(Modifier.width(10.dp))
+            trailing()
+        }
     }
 }
 
+/** Secondary action: outlined, yellow text. */
 @Composable
-fun Pill(text: String, selected: Boolean = false, onClick: (() -> Unit)? = null) {
+fun GhostButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    icon: ImageVector? = null,
+    enabled: Boolean = true,
+) {
+    OutlinedButton(
+        onClick = onClick,
+        enabled = enabled,
+        modifier = modifier.fillMaxWidth().height(52.dp),
+        shape = RoundedCornerShape(26.dp),
+        border = BorderStroke(1.dp, if (enabled) Bee.Yellow.copy(alpha = 0.6f) else Bee.Line),
+        colors = ButtonDefaults.outlinedButtonColors(contentColor = Bee.Yellow, disabledContentColor = Bee.Muted),
+    ) {
+        if (icon != null) {
+            Icon(icon, contentDescription = null, modifier = Modifier.size(20.dp))
+            Spacer(Modifier.width(8.dp))
+        }
+        Text(text, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+    }
+}
+
+/** Small rounded chip. [content] replaces [text] when given. */
+@Composable
+fun Pill(
+    text: String = "",
+    selected: Boolean = false,
+    onClick: (() -> Unit)? = null,
+    content: (@Composable RowScope.() -> Unit)? = null,
+) {
     val shape = RoundedCornerShape(50)
-    Text(
-        text = text,
-        color = if (selected) Bee.Black else Bee.Text,
-        fontSize = 13.sp,
-        fontWeight = FontWeight.Bold,
-        modifier = Modifier
+    Row(
+        Modifier
             .clip(shape)
-            .background(if (selected) Bee.Yellow else Bee.Surface)
-            .border(1.dp, if (selected) Bee.Yellow else Bee.Line, shape)
+            .background(if (selected) Bee.YellowSoft else Bee.Surface)
+            .border(1.dp, if (selected) Bee.Yellow.copy(alpha = 0.5f) else Bee.Line, shape)
             .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier)
-            .padding(horizontal = 14.dp, vertical = 8.dp),
+            .padding(horizontal = 12.dp, vertical = 7.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        if (content != null) {
+            content()
+        } else {
+            Text(text, color = if (selected) Bee.Yellow else Bee.Text, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
+        }
+    }
+}
+
+/** Honey balance chip used in screen headers. */
+@Composable
+fun HoneyChip(amount: Long) {
+    Pill(selected = true) { HoneyAmount(amount, fontSize = 14.sp, color = Bee.Yellow) }
+}
+
+/** Uppercase, spaced-out label above a section. */
+@Composable
+fun SectionLabel(text: String, modifier: Modifier = Modifier) {
+    Text(
+        text.uppercase(),
+        color = Bee.Muted,
+        fontSize = 12.sp,
+        fontWeight = FontWeight.SemiBold,
+        letterSpacing = 1.4.sp,
+        modifier = modifier.padding(bottom = 10.dp),
     )
 }
 
+/** Screen title row: big title on the left, optional chip on the right. */
 @Composable
-fun SectionLabel(text: String) {
-    Text(text, color = Bee.Muted, fontSize = 13.sp, fontWeight = FontWeight.SemiBold,
-        modifier = Modifier.padding(bottom = 8.dp))
+fun ScreenHeader(title: String, subtitle: String? = null, trailing: (@Composable () -> Unit)? = null) {
+    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+        Column(Modifier.weight(1f)) {
+            Text(title, color = Bee.Text, fontSize = 28.sp, fontWeight = FontWeight.Bold, letterSpacing = (-0.5).sp)
+            if (subtitle != null) Text(subtitle, color = Bee.Muted, fontSize = 14.sp)
+        }
+        if (trailing != null) trailing()
+    }
+}
+
+/** Dark rounded container with a hairline border. */
+@Composable
+fun BeeCard(
+    modifier: Modifier = Modifier,
+    highlight: Boolean = false,
+    padding: Dp = 20.dp,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    val shape = RoundedCornerShape(24.dp)
+    Column(
+        modifier
+            .fillMaxWidth()
+            .clip(shape)
+            .background(Bee.Surface)
+            .border(1.dp, if (highlight) Bee.Yellow.copy(alpha = 0.55f) else Bee.Line, shape)
+            .padding(padding),
+        verticalArrangement = Arrangement.Top,
+        content = content,
+    )
 }

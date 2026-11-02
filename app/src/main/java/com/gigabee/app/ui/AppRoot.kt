@@ -44,6 +44,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -128,8 +129,9 @@ fun AppRoot(vm: AppViewModel) {
     }
 }
 
+/** Bottom bar: the active tab gets a yellow pill behind its icon. */
 @Composable
-private fun BeeTabs(selected: Int, onSelect: (Int) -> Unit) {
+internal fun BeeTabs(selected: Int, onSelect: (Int) -> Unit) {
     val tabs: List<Pair<Int, ImageVector>> = listOf(
         R.string.tab_earn to Icons.Rounded.PlayArrow,
         R.string.tab_wheel to Icons.Rounded.Refresh,
@@ -139,21 +141,33 @@ private fun BeeTabs(selected: Int, onSelect: (Int) -> Unit) {
     )
     Column(Modifier.background(Bee.Black).navigationBarsPadding()) {
         HorizontalDivider(color = Bee.Line)
-        Row(Modifier.fillMaxWidth().height(64.dp)) {
+        Row(Modifier.fillMaxWidth().height(70.dp).padding(horizontal = 6.dp)) {
             tabs.forEachIndexed { i, (label, icon) ->
                 val active = i == selected
-                val tint = if (active) Bee.Yellow else Bee.Muted
                 Column(
-                    Modifier.weight(1f).fillMaxHeight().clickable { onSelect(i) },
+                    Modifier
+                        .weight(1f)
+                        .fillMaxHeight()
+                        .clickable(interactionSource = null, indication = null) { onSelect(i) },
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
                 ) {
-                    Icon(icon, contentDescription = null, tint = tint, modifier = Modifier.size(24.dp))
+                    Box(
+                        Modifier
+                            .size(width = 52.dp, height = 30.dp)
+                            .clip(RoundedCornerShape(15.dp))
+                            .background(if (active) Bee.Yellow else Bee.Black),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Icon(icon, contentDescription = null, tint = if (active) Bee.Black else Bee.Muted, modifier = Modifier.size(20.dp))
+                    }
+                    Spacer(Modifier.height(4.dp))
                     Text(
                         stringResource(label),
-                        color = tint,
-                        fontSize = 12.sp,
-                        fontWeight = if (active) FontWeight.Bold else FontWeight.Medium,
+                        color = if (active) Bee.Text else Bee.Muted,
+                        fontSize = 11.sp,
+                        fontWeight = if (active) FontWeight.SemiBold else FontWeight.Medium,
+                        maxLines = 1,
                     )
                 }
             }
