@@ -41,6 +41,10 @@ class LocalRepository(context: Context) : Repository {
             kbPerAd = kbPerAd,
             bundles = bundles,
             esim = esim(),
+            streak = if (adsToday > 0) 1 else 0,
+            nickname = prefs.getString("nick", null) ?: "LuckyBee123",
+            referralCode = "DEMO42",
+            canEnterReferral = true,
         )
     }
 
@@ -105,4 +109,22 @@ class LocalRepository(context: Context) : Repository {
     override suspend fun debugBonus() = addEntry(100 * KB_PER_MB, "bonus")
 
     override suspend fun demoSurvey() = addEntry(100 * KB_PER_MB, "survey", "Demo")
+
+    override suspend fun leaderboard(): Leaderboard {
+        val mine = prefs.getLong("balance", 0L)
+        val others = listOf("TurboBee482" to 900L, "GoldenHive117" to 640L, "CosmicBuzz305" to 410L, "HappyComb908" to 120L)
+            .map { (n, mb) -> n to mb * KB_PER_MB }
+        val all = (others + ((prefs.getString("nick", null) ?: "LuckyBee123") to mine)).sortedByDescending { it.second }
+        val top = all.mapIndexed { i, (n, kb) -> LeaderboardEntry(i + 1, n, kb, kb == mine && n == (prefs.getString("nick", null) ?: "LuckyBee123")) }
+        val me = top.firstOrNull { it.me }
+        return Leaderboard(top, me?.rank, mine)
+    }
+
+    override suspend fun redeemReferral(code: String): String? = "invalid"
+
+    override suspend fun rerollNickname(): String {
+        val nick = listOf("Swift", "Mega", "Neon", "Royal").random() + listOf("Bee", "Honey", "Queen").random() + (100..999).random()
+        prefs.edit { putString("nick", nick) }
+        return nick
+    }
 }

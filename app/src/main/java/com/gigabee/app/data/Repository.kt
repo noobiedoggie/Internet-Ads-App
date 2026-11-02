@@ -26,4 +26,13 @@ interface Repository {
 
     /** Demo only: simulates a completed survey when no BitLabs token is configured. */
     suspend fun demoSurvey() {}
+
+    /** This week's top 20 (by MB earned) and the user's own rank. */
+    suspend fun leaderboard(): Leaderboard
+
+    /** Applies a friend's invite code. Returns null on success, or a reason code. */
+    suspend fun redeemReferral(code: String): String?
+
+    /** Picks a new random nickname and returns it. */
+    suspend fun rerollNickname(): String
 }

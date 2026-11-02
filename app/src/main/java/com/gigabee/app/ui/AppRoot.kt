@@ -21,7 +21,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.List
 import androidx.compose.material.icons.automirrored.rounded.Send
+import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material.icons.rounded.PlayArrow
+import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.TextButton
@@ -92,6 +94,12 @@ fun AppRoot(vm: AppViewModel) {
                     onSurveys = if (ui.surveysAvailable) vm::openSurveys else null,
                 )
                 tab == 1 -> RedeemScreen(ui, onRedeem = { bundle -> vm.redeem(bundle.id) })
+                tab == 2 -> TopScreen(
+                    ui,
+                    onLoad = vm::loadLeaderboard,
+                    onReroll = vm::rerollNickname,
+                    onApplyCode = vm::applyReferral,
+                )
                 else -> ActivityScreen(ui)
             }
         }
@@ -122,7 +130,8 @@ fun AppRoot(vm: AppViewModel) {
 private fun BeeTabs(selected: Int, onSelect: (Int) -> Unit) {
     val tabs: List<Pair<Int, ImageVector>> = listOf(
         R.string.tab_earn to Icons.Rounded.PlayArrow,
-        R.string.tab_redeem to Icons.AutoMirrored.Rounded.Send,
+        R.string.tab_redeem to Icons.Rounded.Lock,
+        R.string.tab_top to Icons.Rounded.Star,
         R.string.tab_activity to Icons.AutoMirrored.Rounded.List,
     )
     Column(Modifier.background(Bee.Black).navigationBarsPadding()) {

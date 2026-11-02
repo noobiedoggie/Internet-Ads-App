@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Status-bar icon: white honeycomb cell with two cut-out stripes. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:fillType="evenOdd"
+        android:pathData="M12,2 L20.66,7 L20.66,17 L12,22 L3.34,17 L3.34,7 Z M3.34,9.2 L20.66,9.2 L20.66,11 L3.34,11 Z M3.34,13 L20.66,13 L20.66,14.8 L3.34,14.8 Z" />
+</vector>

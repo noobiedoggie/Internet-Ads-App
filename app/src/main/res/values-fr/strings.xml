@@ -71,4 +71,28 @@
     <string name="vault_soon">Les gigas arrivent bientôt</string>
     <string name="vault_body">Bientôt, vous pourrez échanger vos Mo contre du vrai internet sur une eSIM GigaBee (USA et Europe). Continuez à regarder des pubs : tout ce que vous gagnez est gardé.</string>
     <string name="home_vault">Vos Mo vont directement dans votre coffre. Les gigas arrivent bientôt !</string>
+
+    <string name="tab_top">Top</string>
+    <string name="streak_label">🔥 %1$d jours</string>
+    <string name="streak_bonus">Bonus +%1$d %%</string>
+    <string name="streak_hint">Revenez chaque jour : jusqu’à +%1$d %% de Mo par pub.</string>
+    <string name="streak_keep">Regardez 1 pub aujourd’hui pour garder votre série de %1$d jours !</string>
+    <string name="top_title">Top de la semaine</string>
+    <string name="top_you">Vous · n°%1$d cette semaine</string>
+    <string name="top_unranked">Regardez une pub pour entrer dans le classement de la semaine.</string>
+    <string name="top_reset">Remis à zéro chaque lundi</string>
+    <string name="reroll">Nouveau nom</string>
+    <string name="invite_title">Invitez vos amis</string>
+    <string name="invite_body">Vous gagnez tous les deux %1$s quand votre ami regarde %2$d pubs.</string>
+    <string name="invite_share">Partager mon code</string>
+    <string name="invite_message">Rejoins-moi sur GigaBee 🐝 Regarde des pubs, gagne de l’internet gratuit. Mon code : %1$s – %2$s</string>
+    <string name="invite_have_code">Vous avez le code d’un ami ?</string>
+    <string name="invite_apply">Valider</string>
+    <string name="invite_progress">Bonus parrainage : %1$d/%2$d pubs</string>
+    <string name="invite_done">Bonus parrainage reçu ✅</string>
+    <string name="invite_ok">Code validé ! Regardez %1$d pubs pour débloquer votre bonus.</string>
+    <string name="invite_invalid">Ce code ne peut pas être utilisé.</string>
+    <string name="notif_title">Vos pubs sont prêtes 🐝</string>
+    <string name="notif_body">Regardez aujourd’hui pour garder votre série et remplir votre coffre.</string>
+    <string name="notif_channel">Rappel quotidien</string>
 </resources>

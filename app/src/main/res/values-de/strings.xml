@@ -71,4 +71,28 @@
     <string name="vault_soon">Gigas kommen bald</string>
     <string name="vault_body">Bald tauschst du deine MB gegen echtes Internet auf einer GigaBee-eSIM (USA und Europa). Schau weiter Werbung: Alles, was du verdienst, bleibt gespeichert.</string>
     <string name="home_vault">Deine MB landen direkt in deinem Tresor. Gigas kommen bald!</string>
+
+    <string name="tab_top">Top</string>
+    <string name="streak_label">🔥 %1$d Tage</string>
+    <string name="streak_bonus">Bonus +%1$d %%</string>
+    <string name="streak_hint">Komm jeden Tag wieder: bis zu +%1$d %% MB pro Werbung.</string>
+    <string name="streak_keep">Sieh dir heute 1 Werbung an, um deine %1$d-Tage-Serie zu halten!</string>
+    <string name="top_title">Top der Woche</string>
+    <string name="top_you">Du · Platz %1$d diese Woche</string>
+    <string name="top_unranked">Sieh dir eine Werbung an, um ins Wochenranking zu kommen.</string>
+    <string name="top_reset">Startet jeden Montag neu</string>
+    <string name="reroll">Neuer Name</string>
+    <string name="invite_title">Freunde einladen</string>
+    <string name="invite_body">Ihr bekommt beide %1$s, wenn dein Freund %2$d Werbungen ansieht.</string>
+    <string name="invite_share">Code teilen</string>
+    <string name="invite_message">Komm zu GigaBee 🐝 Werbung ansehen, gratis Datenvolumen verdienen. Mein Code: %1$s – %2$s</string>
+    <string name="invite_have_code">Hast du einen Code?</string>
+    <string name="invite_apply">Einlösen</string>
+    <string name="invite_progress">Freundesbonus: %1$d/%2$d Werbungen</string>
+    <string name="invite_done">Freundesbonus erhalten ✅</string>
+    <string name="invite_ok">Code eingelöst! Sieh dir %1$d Werbungen an, um deinen Bonus freizuschalten.</string>
+    <string name="invite_invalid">Dieser Code kann nicht verwendet werden.</string>
+    <string name="notif_title">Deine Werbungen sind bereit 🐝</string>
+    <string name="notif_body">Schau heute, um deine Serie zu halten und deinen Tresor zu füllen.</string>
+    <string name="notif_channel">Tägliche Erinnerung</string>
 </resources>

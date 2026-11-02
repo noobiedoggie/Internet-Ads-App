@@ -71,4 +71,28 @@
     <string name="vault_soon">Giga in arrivo</string>
     <string name="vault_body">Presto potrai scambiare i tuoi MB con vero internet su una eSIM GigaBee (USA ed Europa). Continua a guardare annunci: tutto ciò che guadagni resta salvato.</string>
     <string name="home_vault">I tuoi MB vanno dritti nella cassaforte. Giga in arrivo!</string>
+
+    <string name="tab_top">Top</string>
+    <string name="streak_label">🔥 %1$d giorni</string>
+    <string name="streak_bonus">Bonus +%1$d%%</string>
+    <string name="streak_hint">Torna ogni giorno: fino a +%1$d%% di MB per annuncio.</string>
+    <string name="streak_keep">Guarda 1 annuncio oggi per mantenere la tua serie di %1$d giorni!</string>
+    <string name="top_title">Top della settimana</string>
+    <string name="top_you">Tu · #%1$d questa settimana</string>
+    <string name="top_unranked">Guarda un annuncio per entrare nella classifica della settimana.</string>
+    <string name="top_reset">Si azzera ogni lunedì</string>
+    <string name="reroll">Nuovo nome</string>
+    <string name="invite_title">Invita amici</string>
+    <string name="invite_body">Ricevete entrambi %1$s quando il tuo amico guarda %2$d annunci.</string>
+    <string name="invite_share">Condividi il codice</string>
+    <string name="invite_message">Unisciti a GigaBee 🐝 Guarda annunci e guadagna internet gratis. Il mio codice: %1$s – %2$s</string>
+    <string name="invite_have_code">Hai il codice di un amico?</string>
+    <string name="invite_apply">Applica</string>
+    <string name="invite_progress">Bonus amico: %1$d/%2$d annunci</string>
+    <string name="invite_done">Bonus amico ricevuto ✅</string>
+    <string name="invite_ok">Codice applicato! Guarda %1$d annunci per sbloccare il bonus.</string>
+    <string name="invite_invalid">Questo codice non può essere usato.</string>
+    <string name="notif_title">I tuoi annunci sono pronti 🐝</string>
+    <string name="notif_body">Guarda oggi per mantenere la serie e riempire la cassaforte.</string>
+    <string name="notif_channel">Promemoria giornaliero</string>
 </resources>

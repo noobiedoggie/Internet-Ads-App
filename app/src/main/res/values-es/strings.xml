@@ -71,4 +71,28 @@
     <string name="vault_soon">Gigas muy pronto</string>
     <string name="vault_body">Pronto podrás cambiar tus megas por internet real en una eSIM GigaBee (EE. UU. y Europa). Sigue viendo anuncios: todo lo que ganes se guarda.</string>
     <string name="home_vault">Tus megas van directo a tu bóveda. ¡Gigas muy pronto!</string>
+
+    <string name="tab_top">Top</string>
+    <string name="streak_label">🔥 %1$d días</string>
+    <string name="streak_bonus">Bono +%1$d%%</string>
+    <string name="streak_hint">Vuelve cada día: hasta +%1$d%% de megas por anuncio.</string>
+    <string name="streak_keep">¡Mira 1 anuncio hoy para mantener tu racha de %1$d días!</string>
+    <string name="top_title">Top de la semana</string>
+    <string name="top_you">Tú · #%1$d esta semana</string>
+    <string name="top_unranked">Mira un anuncio para entrar en el ranking de la semana.</string>
+    <string name="top_reset">Se reinicia cada lunes</string>
+    <string name="reroll">Nuevo nombre</string>
+    <string name="invite_title">Invita amigos</string>
+    <string name="invite_body">Ambos reciben %1$s cuando tu amigo vea %2$d anuncios.</string>
+    <string name="invite_share">Compartir mi código</string>
+    <string name="invite_message">Únete a GigaBee 🐝 Mira anuncios y gana datos móviles gratis. Mi código: %1$s – %2$s</string>
+    <string name="invite_have_code">¿Tienes el código de un amigo?</string>
+    <string name="invite_apply">Aplicar</string>
+    <string name="invite_progress">Bono de amigo: %1$d/%2$d anuncios</string>
+    <string name="invite_done">Bono de amigo recibido ✅</string>
+    <string name="invite_ok">¡Código aplicado! Mira %1$d anuncios para desbloquear tu bono.</string>
+    <string name="invite_invalid">Este código no se puede usar.</string>
+    <string name="notif_title">Tus anuncios están listos 🐝</string>
+    <string name="notif_body">Mira hoy para mantener tu racha y llenar tu bóveda.</string>
+    <string name="notif_channel">Recordatorio diario</string>
 </resources>

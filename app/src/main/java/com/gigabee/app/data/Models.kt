@@ -23,6 +23,16 @@ data class AppState(
     val kbPerAd: Long,
     val bundles: List<DataBundle>,
     val esim: EsimInfo? = null,
+    val streak: Int = 0,
+    val streakBonusPct: Int = 0,
+    val nickname: String? = null,
+    val referralCode: String? = null,
+    val referred: Boolean = false,
+    val referralPaid: Boolean = false,
+    val canEnterReferral: Boolean = false,
+    val lifetimeAds: Int = 0,
+    val referralTarget: Int = 30,
+    val referralKb: Long = 50 * KB_PER_MB,
 ) {
     val capReached get() = adsToday >= dailyCap
     private val sizes get() = bundles.map { it.dataKb }.distinct().sorted()
@@ -51,3 +61,7 @@ sealed interface RedeemResult {
 }
 
 class HttpException(val code: Int, body: String) : Exception("HTTP $code: ${body.take(300)}")
+
+data class LeaderboardEntry(val rank: Int, val nickname: String, val kb: Long, val me: Boolean)
+
+data class Leaderboard(val top: List<LeaderboardEntry>, val myRank: Int?, val myKb: Long)

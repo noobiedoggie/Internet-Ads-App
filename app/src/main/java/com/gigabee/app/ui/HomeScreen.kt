@@ -83,6 +83,13 @@ fun HomeScreen(
             Pill(stringResource(R.string.ads_today, s.adsToday, s.dailyCap))
         }
 
+        Spacer(Modifier.height(14.dp))
+        if (s.streak > 0) {
+            Pill(stringResource(R.string.streak_label, s.streak) + " · " + stringResource(R.string.streak_bonus, s.streakBonusPct), selected = true)
+        } else {
+            Text(stringResource(R.string.streak_hint, 20), color = Bee.Muted, fontSize = 13.sp, textAlign = TextAlign.Center)
+        }
+
         Spacer(Modifier.weight(1f))
 
         Box(
@@ -173,9 +180,11 @@ fun HomeScreen(
                     stringResource(
                         when {
                             s.capReached -> R.string.helper_cap
+                            s.streak > 0 && s.adsToday == 0 -> R.string.streak_keep
                             s.bundles.isEmpty() -> R.string.home_vault
                             else -> R.string.helper_earn
                         },
+                        s.streak,
                     ),
                     color = Bee.Muted,
                     fontSize = 13.sp,

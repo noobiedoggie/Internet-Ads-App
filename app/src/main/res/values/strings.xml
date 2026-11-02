@@ -73,4 +73,28 @@
     <string name="vault_soon">Gigas coming soon</string>
     <string name="vault_body">Soon you’ll swap your MB for real internet on a GigaBee eSIM (USA and Europe). Keep watching ads: everything you earn is kept.</string>
     <string name="home_vault">Your MB go straight into your vault. Gigas coming soon!</string>
+
+    <string name="tab_top">Top</string>
+    <string name="streak_label">🔥 %1$d days</string>
+    <string name="streak_bonus">Bonus +%1$d%%</string>
+    <string name="streak_hint">Come back every day: up to +%1$d%% MB per ad.</string>
+    <string name="streak_keep">Watch 1 ad today to keep your %1$d-day streak!</string>
+    <string name="top_title">This week’s top</string>
+    <string name="top_you">You · #%1$d this week</string>
+    <string name="top_unranked">Watch an ad to join this week’s ranking.</string>
+    <string name="top_reset">Resets every Monday</string>
+    <string name="reroll">New name</string>
+    <string name="invite_title">Invite friends</string>
+    <string name="invite_body">You both get %1$s when your friend watches %2$d ads.</string>
+    <string name="invite_share">Share my code</string>
+    <string name="invite_message">Join me on GigaBee 🐝 Watch ads, earn free mobile data. My code: %1$s – %2$s</string>
+    <string name="invite_have_code">Got a friend’s code?</string>
+    <string name="invite_apply">Apply</string>
+    <string name="invite_progress">Friend bonus: %1$d/%2$d ads</string>
+    <string name="invite_done">Friend bonus received ✅</string>
+    <string name="invite_ok">Code applied! Watch %1$d ads to unlock your bonus.</string>
+    <string name="invite_invalid">This code can’t be used.</string>
+    <string name="notif_title">Your ads are ready 🐝</string>
+    <string name="notif_body">Watch today to keep your streak and fill your vault.</string>
+    <string name="notif_channel">Daily reminder</string>
 </resources>

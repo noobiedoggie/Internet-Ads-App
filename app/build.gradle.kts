@@ -105,4 +105,5 @@ dependencies {
     implementation("com.google.android.gms:play-services-ads:24.4.0")
     implementation("com.google.android.ump:user-messaging-platform:3.1.0")
     implementation("com.google.zxing:core:3.5.3") // QR code for the eSIM install
+    implementation("androidx.work:work-runtime-ktx:2.10.0") // daily reminder
 }

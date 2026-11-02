@@ -10,7 +10,9 @@ import com.gigabee.app.R
 import com.gigabee.app.data.AppState
 import com.gigabee.app.data.KB_PER_MB
 import java.net.URLEncoder
+import com.gigabee.app.data.Leaderboard
 import com.gigabee.app.data.LedgerEntry
+import com.gigabee.app.reminder.Reminder
 import com.gigabee.app.data.RedeemResult
 import com.gigabee.app.data.formatData
 import kotlinx.coroutines.CancellationException
@@ -36,6 +38,7 @@ data class UiState(
     val surveysAvailable: Boolean = false,
     val surveyUrl: String? = null,
     val showDemoSurvey: Boolean = false,
+    val leaderboard: Leaderboard? = null,
 )
 
 class AppViewModel(app: Application) : AndroidViewModel(app) {
@@ -99,6 +102,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                     )
                 }
                 if (gained > 0) say(text(R.string.reward_added, formatData(gained)))
+                Reminder.markWatchedToday(getApplication())
                 val h = repo.history()
                 _ui.update { it.copy(history = h) }
             } catch (e: CancellationException) {
@@ -163,6 +167,53 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             repo.demoSurvey()
             refresh()
             say(text(R.string.reward_added, formatData(100 * KB_PER_MB)))
+        }
+    }
+
+    fun loadLeaderboard() {
+        viewModelScope.launch {
+            try {
+                val lb = repo.leaderboard()
+                _ui.update { it.copy(leaderboard = lb) }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                say(text(R.string.error_generic))
+            }
+        }
+    }
+
+    fun applyReferral(code: String) {
+        val clean = code.trim().uppercase()
+        if (clean.isEmpty()) return
+        viewModelScope.launch {
+            try {
+                val reason = repo.redeemReferral(clean)
+                if (reason == null) {
+                    say(text(R.string.invite_ok, _ui.value.state?.referralTarget ?: 30))
+                    reload()
+                } else {
+                    say(text(R.string.invite_invalid))
+                }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                say(text(R.string.error_generic))
+            }
+        }
+    }
+
+    fun rerollNickname() {
+        viewModelScope.launch {
+            try {
+                val nick = repo.rerollNickname()
+                _ui.update { u -> u.copy(state = u.state?.copy(nickname = nick)) }
+                loadLeaderboard()
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                say(text(R.string.error_generic))
+            }
         }
     }
 

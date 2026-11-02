@@ -89,6 +89,16 @@ class SupabaseRepository(
         val e = json.optJSONObject("esim")
         return AppState(
             esim = e?.let { EsimInfo(it.getString("iccid"), it.getString("smdp"), it.getString("code")) },
+            streak = json.optInt("streak", 0),
+            streakBonusPct = json.optInt("streak_bonus_pct", 0),
+            nickname = json.optString("nickname").takeUnless { it.isBlank() || it == "null" },
+            referralCode = json.optString("referral_code").takeUnless { it.isBlank() || it == "null" },
+            referred = json.optBoolean("referred", false),
+            referralPaid = json.optBoolean("referral_paid", false),
+            canEnterReferral = json.optBoolean("can_enter_referral", false),
+            lifetimeAds = json.optInt("lifetime_ads", 0),
+            referralTarget = json.optInt("referral_target", 30),
+            referralKb = json.optLong("referral_kb", 50 * KB_PER_MB),
             balanceKb = json.getLong("balance_kb"),
             adsToday = json.getInt("ads_today"),
             dailyCap = json.getInt("daily_cap"),
@@ -131,6 +141,28 @@ class SupabaseRepository(
     } catch (e: HttpException) {
         RedeemResult.Error(e.message?.substringAfter("\"message\":\"")?.substringBefore('"') ?: "Error")
     }
+
+    override suspend fun leaderboard(): Leaderboard {
+        val json = JSONObject(authed("POST", "/rest/v1/rpc/leaderboard", JSONObject()))
+        val arr = json.optJSONArray("top") ?: JSONArray()
+        val me = json.optJSONObject("me")
+        return Leaderboard(
+            top = (0 until arr.length()).map { i ->
+                val o = arr.getJSONObject(i)
+                LeaderboardEntry(o.getInt("rank"), o.getString("nickname"), o.getLong("kb"), o.optBoolean("me"))
+            },
+            myRank = me?.optInt("rank"),
+            myKb = me?.optLong("kb") ?: 0L,
+        )
+    }
+
+    override suspend fun redeemReferral(code: String): String? {
+        val json = JSONObject(authed("POST", "/rest/v1/rpc/redeem_referral", JSONObject().put("p_code", code)))
+        return if (json.optBoolean("ok")) null else json.optString("reason", "invalid")
+    }
+
+    override suspend fun rerollNickname(): String =
+        authed("POST", "/rest/v1/rpc/reroll_nickname", JSONObject()).trim().trim('"')
 
     // ---------- http ----------
 
