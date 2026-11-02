@@ -70,15 +70,17 @@ fun TopScreen(ui: UiState, onLoad: () -> Unit, onReroll: () -> Unit, onApplyCode
         }
         item { MeCard(s, lb?.myRank, lb?.myScore ?: 0L, onReroll) }
         item {
-            Spacer(Modifier.height(4.dp))
-            InviteCard(s, onApplyCode)
-            Spacer(Modifier.height(18.dp))
+            Spacer(Modifier.height(14.dp))
             SectionLabel(stringResource(R.string.top_title))
         }
         if (lb == null || lb.top.isEmpty()) {
             item { Text(stringResource(R.string.top_unranked), color = Bee.Muted, fontSize = 14.sp) }
         } else {
             items(lb.top, key = { "${it.rank}-${it.nickname}" }) { RankRow(it) }
+        }
+        item {
+            Spacer(Modifier.height(18.dp))
+            InviteCard(s, onApplyCode)
         }
     }
 }
@@ -96,7 +98,7 @@ private fun MeCard(s: AppState, myRank: Int?, myScore: Long, onReroll: () -> Uni
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         HoneyAmount(myScore, fontSize = 13.sp, color = Bee.Yellow)
                         Text(
-                            "  ·  " + stringResource(R.string.top_you, myRank),
+                            "  ·  " + stringResource(R.string.top_rank_short, myRank),
                             color = Bee.Muted,
                             fontSize = 13.sp,
                             maxLines = 1,

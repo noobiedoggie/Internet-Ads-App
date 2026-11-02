@@ -128,4 +128,5 @@
     <string name="need_honey">Du brauchst</string>
     <string name="co_label">Deine Daten</string>
     <string name="kind_referral">Einladung</string>
+    <string name="top_rank_short">Platz %1$d</string>
 </resources>

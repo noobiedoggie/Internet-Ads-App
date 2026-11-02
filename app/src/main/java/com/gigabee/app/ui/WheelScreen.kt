@@ -215,19 +215,21 @@ fun LuckyWheel(segments: List<Long>, rotationDeg: Float, modifier: Modifier = Mo
 
                 val layout = measurer.measure(labels[i], style)
                 rotate(i * sweep, c) {
-                    val ty = c.y - r * 0.64f
-                    if (segments[i] == jackpot) {
-                        val padH = 9.dp.toPx()
-                        val padV = 4.dp.toPx()
-                        val h = layout.size.height + padV * 2
-                        drawRoundRect(
-                            Bee.Yellow,
-                            topLeft = Offset(c.x - layout.size.width / 2f - padH, ty - h / 2f),
-                            size = Size(layout.size.width + padH * 2, h),
-                            cornerRadius = CornerRadius(h / 2f),
-                        )
+                    val label = Offset(c.x, c.y - r * 0.58f)
+                    rotate(90f, label) {
+                        if (segments[i] == jackpot) {
+                            val padH = 9.dp.toPx()
+                            val padV = 4.dp.toPx()
+                            val h = layout.size.height + padV * 2
+                            drawRoundRect(
+                                Bee.Yellow,
+                                topLeft = Offset(label.x - layout.size.width / 2f - padH, label.y - h / 2f),
+                                size = Size(layout.size.width + padH * 2, h),
+                                cornerRadius = CornerRadius(h / 2f),
+                            )
+                        }
+                        drawText(layout, topLeft = Offset(label.x - layout.size.width / 2f, label.y - layout.size.height / 2f))
                     }
-                    drawText(layout, topLeft = Offset(c.x - layout.size.width / 2f, ty - layout.size.height / 2f))
                 }
             }
         }

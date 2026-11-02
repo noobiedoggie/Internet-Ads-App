@@ -128,4 +128,5 @@
     <string name="need_honey">Il vous faut</string>
     <string name="co_label">Votre co</string>
     <string name="kind_referral">Parrainage</string>
+    <string name="top_rank_short">n°%1$d</string>
 </resources>
