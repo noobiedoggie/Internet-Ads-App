@@ -106,4 +106,5 @@ dependencies {
     implementation("com.google.android.ump:user-messaging-platform:3.1.0")
     implementation("com.google.zxing:core:3.5.3") // QR code for the eSIM install
     implementation("androidx.work:work-runtime-ktx:2.10.0") // daily reminder
+    implementation("androidx.fragment:fragment-ktx:1.8.5") // play-services-ads pulls an old Fragment; permission request needs >= 1.3
 }
