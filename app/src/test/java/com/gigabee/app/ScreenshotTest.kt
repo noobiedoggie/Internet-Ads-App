@@ -36,7 +36,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 
-/** Renders each screen with sample data to app/build/screenshots/*.png (published by CI). */
+/** Renders each screen with sample data into app/build/screenshots as PNG files (published by CI). */
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(sdk = [34], qualifiers = "fr-w400dp-h860dp-xhdpi", application = Application::class)
