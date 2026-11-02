@@ -23,6 +23,7 @@
     <string name="balance">Balance: %1$s</string>
     <string name="carrier">Carrier</string>
     <string name="phone">Phone number</string>
+    <string name="phone_hint">(555) 123-4567</string>
     <string name="choose_bundle">Choose a bundle</string>
     <string name="need_more">%1$s to go</string>
     <string name="send_bundle">Send %1$s</string>

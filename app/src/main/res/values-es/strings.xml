@@ -21,6 +21,7 @@
     <string name="balance">Saldo: %1$s</string>
     <string name="carrier">Compañía</string>
     <string name="phone">Número de celular</string>
+    <string name="phone_hint">55 1234 5678</string>
     <string name="choose_bundle">Elige un paquete</string>
     <string name="need_more">Te faltan %1$s</string>
     <string name="send_bundle">Enviar %1$s</string>

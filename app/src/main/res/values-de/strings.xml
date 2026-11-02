@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tab_earn">Verdienen</string>
+    <string name="tab_redeem">Einlösen</string>
+    <string name="tab_activity">Verlauf</string>
+
+    <string name="watch_ad">Werbung ansehen</string>
+    <string name="loading_ad">Werbung wird geladen…</string>
+    <string name="cap_reached">Morgen wieder</string>
+    <string name="ads_today">%1$d/%2$d heute</string>
+    <string name="of_goal">von %1$s</string>
+    <string name="helper_earn">Kurze Werbung ansehen, Megabytes sammeln und aufs Handy schicken.</string>
+    <string name="helper_cap">Tageslimit erreicht. Neue Werbung um Mitternacht (UTC).</string>
+    <string name="helper_ready">Genug für %1$s!</string>
+    <string name="redeem_now">Jetzt einlösen</string>
+    <string name="reward_added">+%1$s gutgeschrieben</string>
+    <string name="no_reward">Sieh dir die ganze Werbung an, um zu verdienen.</string>
+    <string name="verifying">Belohnung wird geprüft…</string>
+    <string name="debug_bonus">Debug: +100 MB</string>
+
+    <string name="balance">Guthaben: %1$s</string>
+    <string name="carrier">Anbieter</string>
+    <string name="phone">Handynummer</string>
+    <string name="phone_hint">0151 23456789</string>
+    <string name="choose_bundle">Paket wählen</string>
+    <string name="need_more">Noch %1$s</string>
+    <string name="send_bundle">%1$s senden</string>
+    <string name="confirm_title">%1$s senden?</string>
+    <string name="confirm_body">%1$s Datenvolumen geht an %2$s (%3$s). Prüfe die Nummer genau: Das lässt sich nicht rückgängig machen.</string>
+    <string name="confirm">Senden</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="demo_note">Demo-Modus: Es werden keine echten Daten gesendet.</string>
+    <string name="no_bundles">In deinem Land ist Einlösen noch nicht verfügbar. Sammle weiter, deine MB bleiben gespeichert.</string>
+    <string name="redeem_ok">Unterwegs! Dein Datenvolumen kommt meist in wenigen Minuten an.</string>
+
+    <string name="activity_empty">Sieh dir deine erste Werbung an, um loszulegen.</string>
+    <string name="kind_ad">Werbung angesehen</string>
+    <string name="kind_redeem">Daten gesendet</string>
+    <string name="kind_refund">Erstattung</string>
+    <string name="kind_bonus">Bonus</string>
+    <string name="status_pending">Ausstehend</string>
+    <string name="status_failed">Fehlgeschlagen, erstattet</string>
+
+    <string name="error_generic">Etwas ist schiefgelaufen. Prüfe deine Verbindung.</string>
+    <string name="retry">Erneut versuchen</string>
+</resources>

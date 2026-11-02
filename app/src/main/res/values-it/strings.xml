@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tab_earn">Guadagna</string>
+    <string name="tab_redeem">Riscatta</string>
+    <string name="tab_activity">Attività</string>
+
+    <string name="watch_ad">Guarda annuncio</string>
+    <string name="loading_ad">Caricamento annuncio…</string>
+    <string name="cap_reached">Torna domani</string>
+    <string name="ads_today">%1$d/%2$d oggi</string>
+    <string name="of_goal">di %1$s</string>
+    <string name="helper_earn">Guarda brevi annunci, accumula megabyte e inviali al tuo telefono.</string>
+    <string name="helper_cap">Hai raggiunto il limite di oggi. Nuovi annunci a mezzanotte (UTC).</string>
+    <string name="helper_ready">Hai abbastanza per %1$s!</string>
+    <string name="redeem_now">Riscatta ora</string>
+    <string name="reward_added">+%1$s aggiunti</string>
+    <string name="no_reward">Guarda tutto l’annuncio per guadagnare.</string>
+    <string name="verifying">Verifica della ricompensa…</string>
+    <string name="debug_bonus">Debug: +100 MB</string>
+
+    <string name="balance">Saldo: %1$s</string>
+    <string name="carrier">Operatore</string>
+    <string name="phone">Numero di telefono</string>
+    <string name="phone_hint">312 345 6789</string>
+    <string name="choose_bundle">Scegli un pacchetto</string>
+    <string name="need_more">Ti mancano %1$s</string>
+    <string name="send_bundle">Invia %1$s</string>
+    <string name="confirm_title">Inviare %1$s?</string>
+    <string name="confirm_body">%1$s di dati verranno inviati al %2$s (%3$s). Controlla bene il numero: non si può annullare.</string>
+    <string name="confirm">Invia</string>
+    <string name="cancel">Annulla</string>
+    <string name="demo_note">Modalità demo: non vengono inviati dati reali.</string>
+    <string name="no_bundles">I riscatti non sono ancora disponibili nel tuo paese. Continua a guadagnare, i tuoi MB restano salvati.</string>
+    <string name="redeem_ok">In arrivo! I dati di solito arrivano in pochi minuti.</string>
+
+    <string name="activity_empty">Guarda il tuo primo annuncio per iniziare a guadagnare.</string>
+    <string name="kind_ad">Annuncio guardato</string>
+    <string name="kind_redeem">Dati inviati</string>
+    <string name="kind_refund">Rimborso</string>
+    <string name="kind_bonus">Bonus</string>
+    <string name="status_pending">In attesa</string>
+    <string name="status_failed">Non riuscito, rimborsato</string>
+
+    <string name="error_generic">Qualcosa è andato storto. Controlla la connessione.</string>
+    <string name="retry">Riprova</string>
+</resources>

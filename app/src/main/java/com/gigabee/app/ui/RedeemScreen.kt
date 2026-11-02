@@ -87,9 +87,9 @@ fun RedeemScreen(ui: UiState, onRedeem: (DataBundle, String) -> Unit) {
         SectionLabel(stringResource(R.string.phone))
         OutlinedTextField(
             value = phone,
-            onValueChange = { v -> phone = v.filter { it.isDigit() || it == '+' || it == ' ' }.take(20) },
+            onValueChange = { v -> phone = v.filter { it.isDigit() || it in "+ -()" }.take(20) },
             singleLine = true,
-            placeholder = { Text("55 1234 5678") },
+            placeholder = { Text(stringResource(R.string.phone_hint)) },
             leadingIcon = { Icon(Icons.Rounded.Phone, contentDescription = null) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             shape = RoundedCornerShape(16.dp),

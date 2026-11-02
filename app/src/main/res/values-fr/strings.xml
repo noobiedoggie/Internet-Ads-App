@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tab_earn">Gagner</string>
+    <string name="tab_redeem">Échanger</string>
+    <string name="tab_activity">Activité</string>
+
+    <string name="watch_ad">Voir une pub</string>
+    <string name="loading_ad">Chargement de la pub…</string>
+    <string name="cap_reached">Revenez demain</string>
+    <string name="ads_today">%1$d/%2$d aujourd’hui</string>
+    <string name="of_goal">sur %1$s</string>
+    <string name="helper_earn">Regardez de courtes pubs, cumulez des mégas et envoyez-les sur votre téléphone.</string>
+    <string name="helper_cap">Limite du jour atteinte. Nouvelles pubs à minuit (UTC).</string>
+    <string name="helper_ready">Vous avez assez pour %1$s !</string>
+    <string name="redeem_now">Échanger</string>
+    <string name="reward_added">+%1$s ajoutés</string>
+    <string name="no_reward">Regardez la pub jusqu’au bout pour gagner.</string>
+    <string name="verifying">Vérification de votre récompense…</string>
+    <string name="debug_bonus">Debug : +100 Mo</string>
+
+    <string name="balance">Solde : %1$s</string>
+    <string name="carrier">Opérateur</string>
+    <string name="phone">Numéro de téléphone</string>
+    <string name="phone_hint">06 12 34 56 78</string>
+    <string name="choose_bundle">Choisissez un forfait</string>
+    <string name="need_more">Encore %1$s</string>
+    <string name="send_bundle">Envoyer %1$s</string>
+    <string name="confirm_title">Envoyer %1$s ?</string>
+    <string name="confirm_body">%1$s de données seront envoyés au %2$s (%3$s). Vérifiez bien le numéro : c’est irréversible.</string>
+    <string name="confirm">Envoyer</string>
+    <string name="cancel">Annuler</string>
+    <string name="demo_note">Mode démo : aucune donnée réelle n’est envoyée.</string>
+    <string name="no_bundles">Les échanges ne sont pas encore disponibles dans votre pays. Continuez à gagner, vos mégas sont conservés.</string>
+    <string name="redeem_ok">C’est parti ! Vos données arrivent en général en quelques minutes.</string>
+
+    <string name="activity_empty">Regardez votre première pub pour commencer à gagner.</string>
+    <string name="kind_ad">Pub regardée</string>
+    <string name="kind_redeem">Données envoyées</string>
+    <string name="kind_refund">Remboursement</string>
+    <string name="kind_bonus">Bonus</string>
+    <string name="status_pending">En attente</string>
+    <string name="status_failed">Échec, remboursé</string>
+
+    <string name="error_generic">Un problème est survenu. Vérifiez votre connexion.</string>
+    <string name="retry">Réessayer</string>
+</resources>

@@ -32,6 +32,36 @@ Other profit protections already built in:
 - Unredeemed balances stay as MB, and they only cost you if someone redeems them.
 - **Profit view:** `select * from economics_30d;` shows ads watched, estimated revenue and data cost per country.
 
+## Target markets: USA, France and Europe
+
+The app is in English, French (with Mo/Go units), German, Italian and Spanish. Google's consent form
+for Europe (GDPR) is already built in.
+
+**Problem:** in the US and France most people pay a monthly plan, and many have unlimited or very
+cheap data. A carrier top-up API like Reloadly can only add credit to **prepaid** lines, and it mostly
+sends airtime (call/text credit), not data packs. So carrier top-ups would reach only a small share of users.
+
+**Recommended instead: a GigaBee eSIM.** Use an eSIM reseller API (for example Airalo Partners,
+eSIM Go or eSIM Access) to offer your own data plans inside the app. This works on any recent phone,
+on any carrier, in the US and all of Europe. Users install the GigaBee eSIM once and then:
+- **earn** data on it by watching ads (the current points system, unchanged), and
+- **buy** extra GB in the app (a second income on top of ads).
+
+This also helps with ad network rules: the reward becomes credit for **your own in-app service**,
+the same model carriers use for "watch ads, get data". AdMob allows rewards that are only usable
+inside the publisher's own app or service. Still get written confirmation from your ad network.
+
+Example economics, using the same formula and a 35% margin. These are examples, not real quotes:
+put your real AdMob eCPM and your eSIM supplier's price per GB into `country_config`.
+
+| Market | Example eCPM | Example cost per GB | MB per ad | Ads per 1 GB | You earn per GB |
+|---|---|---|---|---|---|
+| USA | $15 | $2.00 | 5.0 | ~205 | $1.08 |
+| France | $8 | $2.00 | 2.7 | ~385 | $1.08 |
+
+Before publishing in the EU you also need a privacy policy URL, and a "delete my account" option
+because the Play Store requires one for apps that create accounts.
+
 ## ⚠️ Read before launch: ad network rules
 
 AdMob (and Unity Ads) **don't allow rewards with real-world value** that can be used outside your app.

@@ -1,14 +1,18 @@
 package com.gigabee.app.data
 
 import java.text.NumberFormat
+import java.util.Locale
+
+// French writes octets: Mo / Go instead of MB / GB.
+private val french get() = Locale.getDefault().language == "fr"
 
 /** Splits an amount into number and unit, e.g. 348160 KB -> ("340", "MB"), 1.5 GB -> ("1.5", "GB"). */
 fun dataParts(kb: Long): Pair<String, String> {
     val mb = kb.toDouble() / KB_PER_MB
     return if (mb >= 1024) {
-        number(mb / 1024, if (mb / 1024 >= 10) 1 else 2) to "GB"
+        number(mb / 1024, if (mb / 1024 >= 10) 1 else 2) to (if (french) "Go" else "GB")
     } else {
-        number(mb, if (mb >= 10) 0 else 1) to "MB"
+        number(mb, if (mb >= 10) 0 else 1) to (if (french) "Mo" else "MB")
     }
 }
 
